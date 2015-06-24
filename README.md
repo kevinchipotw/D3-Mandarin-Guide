@@ -1,2 +1,2 @@
 # d3-guide-mandarin
-D3 實戰新手教學
+D3 實戰教學手冊

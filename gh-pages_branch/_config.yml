@@ -10,6 +10,13 @@ github_username:  kevinchipotw
 # Build settings
 markdown: kramdown
 
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+
+
+
+
 port: 8000
 
 

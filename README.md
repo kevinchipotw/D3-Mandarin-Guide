@@ -9,7 +9,10 @@
 網址為: (to be added)  
 本書將著重於使用實戰例子快速讓讀者學會D3的編成流程與技巧。
 
-D3中文實戰教學手冊為開放原始碼(Open Source)，如有興趣加入或參與請email: kevinjipotw@gmail.com
+D3中文實戰教學手冊為開放原始碼(Open Source)，如有興趣加入或參與請:  
+Github: kevinchipotw
+Email: kevinjipotw@gmail.com  
+
 
 
 

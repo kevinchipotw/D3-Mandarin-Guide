@@ -6,11 +6,11 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>關於本實戰手冊</title>
+  <title>第一章 - D3基本介紹</title>
   <meta name="description" content="">
 
   <link rel="stylesheet" href="/css/main.css">
-  <link rel="canonical" href="http://yourdomain.com/about/">
+  <link rel="canonical" href="http://yourdomain.com/ch1/">
   <link rel="alternate" type="application/rss+xml" title="D3中文實戰教學" href="http://yourdomain.com/feed.xml" />
 
   <!-- bootstrap -->
@@ -57,18 +57,30 @@
         <div class="post">
 
   <header class="post-header">
-    <h1 class="post-title">關於本實戰手冊</h1>
+    <h1 class="post-title">第一章 - D3基本介紹</h1>
   </header>
 
   <article class="post-content">
-    <p>專案目標 Project Goal:<br />
-網路上已經有許多關於D3的英文新手教學，不過中文相關的教學資訊卻寥寥無幾。許多中文新手教學都缺乏完整的資料或圖表整理。 在Data快速崛起的時代，D3視覺化的技數也越來越重要。</p>
+    <hr />
 
-<p>此專案將著重於實戰例子快速協助中文讀者瞭解和學習D3的編成流程與技巧。本手冊內容將使用繁體中文，並用網頁的方式呈現內容。</p>
+<p>什麼是D3?<br />
+如果你已經找到或看到了這本教學，相信你已經對D3有初步的瞭解了。如果不了解的話就先去google一下。<br />
+本手冊將不會花太多時間介紹D3，而著重於實作演練。</p>
 
-<p>D3中文實戰教學手冊為開放原始碼(Open Source)，如有興趣加入或參與請 fork 和 send pull request。  <br />
-Github: <a href="https://github.com/kevinchipotw/d3-mandarin-guide" target="_blank">d3-mandarin-guide</a><br />
-Email: kevinjipotw@gmail.com</p>
+<p>基本上D3 (Data Driven Document)就是將Data有效地呈現在網頁上的實用Javascript工具。那麼為什麼要學習D3呢？因為身為工程師的你想要很酷地將你的Data呈現在你的網頁上，而不是跟其他人一樣只用無聊又無趣的Excel或欄位。而且D3還能讓使用者以互動的方始來探索及觀看你的圖表，讓你的網頁更有趣生動。在網路越來越發達的時代這項技能也越來越被著重。</p>
+
+<p>基本D3概念:
+基本上D3要將data呈現在網頁上有兩個基本的要素。一個svg element和至少一個你想要呈現的data。可以將svg想成一塊你要把data畫在上面的布。而D3的功能就是將你的data視覺呈現在你設定的svg上。</p>
+
+<p>一般基本D3呈現流程為:<br />
+1. 設定svg<br />
+2. 將data讀入browser記憶體<br />
+3. 將data分類儲存成你要的格式<br />
+4. 將data綁在視窗上的網頁元素(elements)<br />
+5. 使用網頁元素綁上的data將網頁元素視覺化<br />
+6. 依照使用者操作變化網頁元素的視覺元素，達到互動的效果  </p>
+
+<p>在經過抽象的敘述後，你一定還對D3很陌生。不過沒關係，相信在經過幾的實例之後你也能輕鬆地做出視覺化的效果。讓我們趕快開始吧！</p>
 
   </article>
 

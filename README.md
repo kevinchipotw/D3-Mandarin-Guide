@@ -9,7 +9,7 @@
 網址為: (to be added)
 
 D3中文實戰教學手冊為開放原始碼(Open Source)，如有興趣加入或參與請:  
-Github: kevinchipotw  
+Github: [kevinchipotw](https://github.com/kevinchipotw)  
 Email: kevinjipotw@gmail.com
 
 

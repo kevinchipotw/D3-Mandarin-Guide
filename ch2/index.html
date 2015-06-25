@@ -8,11 +8,11 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>D3中文實戰教學</title>
+  <title>第二章 - 前置作業</title>
   <meta name="description" content="">
 
   <link rel="stylesheet" href="/css/main.css">
-  <link rel="canonical" href="http://yourdomain.com/">
+  <link rel="canonical" href="http://yourdomain.com/ch2/">
   <link rel="alternate" type="application/rss+xml" title="D3中文實戰教學" href="http://yourdomain.com/feed.xml" />
 
   <!-- jquery -->
@@ -60,59 +60,46 @@
 
     <div class="page-content">
       <div class="wrapper">
-        <link rel="stylesheet" type="text/css" href="index.css">
+        <div class="post">
 
-<div class="home">
+  <header class="post-header">
+    <h2>第二章 - 前置作業</h2>
+  </header>
 
-  <h1 class="page-heading">教學手冊簡介</h1>
+  <article class="post-content">
+    <hr />
 
-  <div class = "intro">
-    <p>
-      本書不會解釋基本的html, css 跟javascript 功能，不會呈現過於專業的高難度技術，更不會讓你一天就變成D3專家。這個新手教學適合有基本html, css跟javascript 技術又想學最新D3技術的工程師。此書將透過最有效的實戰演練教您D3的入門技術，讓您能輕鬆越過一開始的新手學習障礙(Learning curve)，再獨自專研D3或將其應用在自己的領域。<br>
+<p>前置作業:</p>
 
-      此教學將先講解基本的D3概念，之後再用實例演練來進一步教學如何使用D3。<br>
+<p>如果你已經會使用D3，可以直接跳過這一章。</p>
 
-      本書為Open source。在讀完之後如果您覺得受益良多，想要貢獻或合作我們都非常歡迎。<br>
+<p>開始實作之前，我先簡單講解一些前置作業。要練功夫，要先把工具準備好。  <br />
+製作D3視覺化需要以下資源:  <br />
+    1. 一個browser (ex: Chrome, Firefox)  <br />
+    2. D3.js檔</p>
 
-      Github: <a href="https://github.com/kevinchipotw/d3-mandarin-guide" target="_blank">d3-mandarin-guide</a>  <br><br>
+<p>D3程式跟一般js檔運作模式是一樣的，所以我們必須要讓我們要呈現的html檔吃到D3檔。  <br />
+D3檔取得的方法有兩種:  <br />
+     1. <a href="https://github.com/mbostock/d3/releases/download/v3.5.5/d3.zip">下載 D3.zip</a>  <br />
+     2. 直接從網路上連接，也就是在html檔中加入以下這個script tag。  </p>
 
-      那麼你準備好學習最先進的D3技術了嗎？ 讓我們開始吧！<br>
-    </p>
-  </div>
+<div class="highlight"><pre><code class="language-css" data-lang="css"><span class="o">&lt;</span><span class="nt">script</span> <span class="nt">src</span><span class="o">=</span><span class="s2">&quot;https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js&quot;</span> <span class="nt">charset</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="o">&gt;&lt;/</span><span class="nt">script</span><span class="o">&gt;</span></code></pre></div>
 
+<p>如果以上都聽不懂沒關係，新手就直接採用方法2(網路上連接)。</p>
 
-  <div class="panel panel-primary">
-    <div class="panel-heading">手冊章節導覽</div>
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">s</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+   <span class="kd">var</span> <span class="nx">s</span> <span class="o">=</span> <span class="s2">"JavaScript syntax highlighting"</span><span class="p">;</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nx">s</span><span class="p">);</span>
+</code></pre>
+</div>
 
-    
-    <table class="table">
-      <a href = "/ch1/"><p class="list-group-item">第一章 - D3基本介紹</p></a>
-      <a href = "/ch2/"><p class="list-group-item">第二章 - 前置作業</p></a>
-      <p class="list-group-item">第二章 - 長條圖</p>
-
-    
-    </table>
-  </div>
-
-
-
-
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="n">s</span> <span class="o">=</span> <span class="s">"Python syntax highlighting"</span>
+<span class="k">print</span> <span class="n">s</span>
+</code></pre>
+</div>
 
 
-  <!-- <ul class="post-list">
-    
-      <li>
-        <span class="post-meta">Jun 25, 2015</span>
-
-        <h2>
-          <a class="post-link" href="/jekyll/update/2015/06/25/welcome-to-jekyll.html">D3中文實戰教學手冊</a>
-        </h2>
-      </li>
-    
-
-  </ul> -->
-
-  
+  </article>
 
 </div>
 

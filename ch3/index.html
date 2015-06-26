@@ -87,6 +87,239 @@
 
 <p><a href="/chapters/ch3/code/index.html" download="index"><span class="btn btn-success">下載長條圖成品</span></a></p>
 
+<hr />
+
+<p>首先照第二章的前置作業先將開一個local server執行index.html (不會的話請先詳閱第二章)<br />
+index.html的code應如下:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+  <span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"UTF-8"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;script </span><span class="na">src =</span><span class="s">"http://d3js.org/d3.v3.min.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+  <span class="nt">&lt;/head&gt;</span>
+  <span class="nt">&lt;body&gt;</span>
+  	<span class="nt">&lt;h1&gt;</span>我的第一個D3<span class="nt">&lt;/h1&gt;</span>
+
+  <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre>
+</div>
+
+<p>之後再body標籤中輸入script標籤，讓html檔知道你輸入的code為js code。<br />
+像這樣:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="nt">&lt;body&gt;</span>
+  <span class="nt">&lt;h1&gt;</span>我的第一個D3<span class="nt">&lt;/h1&gt;</span>
+  <span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span><span class="nt">&gt;</span>
+
+  <span class="nt">&lt;/script&gt;</span>
+
+<span class="nt">&lt;/body&gt;</span>
+</code></pre>
+</div>
+
+<p>現在我們就要開始做D3的編程了！<br />
+<strong>以下的程式碼務必打在上面的script tag裡。</strong><br />
+像這樣:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span><span class="nt">&gt;</span>
+	<span class="c1">// 以下的code...</span>
+<span class="nt">&lt;/script&gt;</span>
+</code></pre>
+</div>
+<p>懂了嗎? 這個指示很重要。</p>
+
+<p>首先我們要先設定svg的性質，因為我們要在svg上呈現我們的資料圖形。<br />
+可以將svg想成一塊布，當你要畫在一塊布上面的時候，是否先決定布的大小? D3同理。<br />
+所以接下來我們所輸入的code你將不會在瀏覽器上看到圖形，因為我們要先訂出我們的白布的尺寸。<br />
+(因為是白色的所以看不到…)<br />
+GO!</p>
+
+<p>先宣布兩個數值: </p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">svg_width</span> <span class="o">=</span> <span class="mi">500</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">svg_height</span><span class="o">=</span> <span class="mi">200</span><span class="p">;</span>
+</code></pre>
+</div>
+<p>svg_width = svg寬度<br />
+svg_heigh = svg長度<br />
+這兩個值是我們之後要用來設定svg(布)的長寬用的。<br />
+<strong>但目前只是訂出了大小，但還設定svg！</strong><br />
+之後加上:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">dataset</span> <span class="o">=</span> <span class="p">[</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">45</span> <span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">35</span> <span class="p">,</span> <span class="mi">18</span><span class="p">];</span>
+</code></pre>
+</div>
+<p>這是我們要視覺化的data。<br />
+這邊先稍微講解一下這個data的結構，dataset的結構為array。<br />
+因此我們如果要取得裡面的一個值，可以用 <em>dataset[i]</em>。<br />
+i 為元素指數(數字)。<br />
+EX: 如果我要取得dataset中 ‘10’ 這個值。<br />
+可以用 <em>dataset[2]</em>。<br />
+這個如果不懂的話，先去看看一些Javascript data結構的書再繼續讀。<br />
+這邊不做過多解釋。</p>
+
+<p>在輸入完dataset之後，我們要用我們之前訂出的大小來<strong>設定svg了</strong>。<br />
+輸入:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">svg</span> <span class="o">=</span> <span class="nx">d3</span><span class="p">.</span><span class="nx">select</span><span class="p">(</span><span class="s2">"body"</span><span class="p">)</span>
+	<span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="s2">"svg"</span><span class="p">)</span>
+	<span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s2">"width"</span><span class="p">,</span> <span class="nx">svg_width</span><span class="p">)</span>
+	<span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s2">"height"</span><span class="p">,</span> <span class="nx">svg_height</span><span class="p">);</span>
+</code></pre>
+</div>
+<p>看不懂嗎? 沒關係，這就是為什麼你要看這本實戰手冊。<br />
+首先，可以先看等號的右邊的編程。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="nx">d3</span><span class="p">.</span><span class="nx">select</span><span class="p">(</span><span class="s2">"body"</span><span class="p">)</span>
+</code></pre>
+</div>
+<p>這行code是我們在跟D3說我要把元素加在body標籤中。<br />
+記得這個嗎?</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+  <span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"UTF-8"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;script </span><span class="na">src =</span><span class="s">"http://d3js.org/d3.v3.min.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+  <span class="nt">&lt;/head&gt;</span>
+  <span class="nt">&lt;body&gt;</span>
+  	<span class="nt">&lt;h1&gt;</span>我的第一個D3<span class="nt">&lt;/h1&gt;</span>
+
+  <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre>
+</div>
+<p>我們在跟D3說我們要把元素加在&lt;body&gt;跟&lt;/body&gt;之間。<br />
+我們要加什麼東西呢？</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="nx">d3</span><span class="p">.</span><span class="nx">select</span><span class="p">(</span><span class="s2">"body"</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="s2">"svg"</span><span class="p">)</span>
+</code></pre>
+</div>
+<p>加svg，append的中文就是加上的意思。<br />
+所以append(“svg”)就是說我要在body標籤中加上svg元素。<br />
+Easy~<br />
+接下來:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="nx">d3</span><span class="p">.</span><span class="nx">select</span><span class="p">(</span><span class="s2">"body"</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="s2">"svg"</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s2">"width"</span><span class="p">,</span> <span class="nx">svg_width</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s2">"height"</span><span class="p">,</span> <span class="nx">svg_height</span><span class="p">);</span>
+</code></pre>
+</div>
+<p>這兩行attr程式碼，就是我們在跟D3說svg的大小。<br />
+前面我們不是有設定svg_width 跟 svg_height？</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">svg_width</span> <span class="o">=</span> <span class="mi">500</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">svg_height</span><span class="o">=</span> <span class="mi">200</span><span class="p">;</span>
+</code></pre>
+</div>
+<p>現在這兩行attr就是在用那兩個數值來設定svg的長寬。</p>
+
+<p>現在我們的code有:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span><span class="nt">&gt;</span>
+  <span class="kd">var</span> <span class="nx">svg_width</span> <span class="o">=</span> <span class="mi">500</span><span class="p">;</span>
+  <span class="kd">var</span> <span class="nx">svg_height</span> <span class="o">=</span> <span class="mi">200</span><span class="p">;</span>
+
+  <span class="kd">var</span> <span class="nx">dataset</span> <span class="o">=</span> <span class="p">[</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">45</span> <span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">35</span> <span class="p">,</span> <span class="mi">18</span><span class="p">];</span>
+
+  <span class="kd">var</span> <span class="nx">svg</span> <span class="o">=</span> <span class="nx">d3</span><span class="p">.</span><span class="nx">select</span><span class="p">(</span><span class="s2">"body"</span><span class="p">)</span>
+        <span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="s2">"svg"</span><span class="p">)</span>
+        <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s2">"width"</span><span class="p">,</span> <span class="nx">svg_width</span><span class="p">)</span>
+        <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s2">"height"</span><span class="p">,</span> <span class="nx">svg_height</span><span class="p">);</span>
+
+<span class="nt">&lt;/script&gt;</span>
+</code></pre>
+</div>
+<p>現在我們已經在我們的html文件中有一個寬500px * 長200px的svg元素和我們要呈現的data array。</p>
+
+<p>OK，先深呼吸。因為接下為重頭戲。<br />
+現在我們必須把data呈現/畫到我們所設定的svg上。<br />
+怎麼做呢？<br />
+輸入: </p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="nx">svg</span><span class="p">.</span><span class="nx">selectAll</span><span class="p">(</span><span class="s2">"rect"</span><span class="p">)</span>
+         <span class="p">.</span><span class="nx">data</span><span class="p">(</span><span class="nx">dataset</span><span class="p">)</span>
+         <span class="p">.</span><span class="nx">enter</span><span class="p">()</span>
+         <span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="s2">"rect"</span><span class="p">)</span>
+</code></pre>
+</div>
+<p>許多人都認為這是D3最難懂的地方，不過其實理解後道理其實很簡單。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="nx">svg</span><span class="p">.</span><span class="nx">selectAll</span><span class="p">(</span><span class="s2">"rect"</span><span class="p">)</span>
+</code></pre>
+</div>
+<p>這行code先select(選擇)了我們html文件中的 “rect” 元素。<br />
+也許你會說我們在文件上並沒有任何 “rect” 元素，那D3要如和選擇那些元素呢？<br />
+其實D3在這個地方所做的是一個empty selection。也就是說他沒有選擇任何元素。<br />
+D3選擇的是你未來要加入到html文件中的元素。<br />
+先繼續看下去。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">.</span><span class="nx">data</span><span class="p">(</span><span class="nx">dataset</span><span class="p">)</span>
+</code></pre>
+</div>
+<p>這行是說，我們要用的data是我們已經宣告的dataset array</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">.</span><span class="nx">enter</span><span class="p">()</span>
+</code></pre>
+</div>
+<p><em>.enter()</em> 是一個比較特殊的語法。<br />
+可以把它想成一個過濾網，過濾掉data值。<br />
+那他是要過濾掉什麼data值呢？<br />
+<em>.enter()</em> 會過濾掉html上已經有元素代表的data。<br />
+因為在我們的html文件上還沒有任何元素代表我們的dataset，所以所有的dataset都不會被排除/過濾。<br />
+而通過.enter所過濾的所有值都會執行.enter()以下的指令。<br />
+所以以我們的dataset來講:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">dataset</span> <span class="o">=</span> <span class="p">[</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">45</span> <span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">35</span> <span class="p">,</span> <span class="mi">18</span><span class="p">];</span>
+</code></pre>
+</div>
+<p>因為所有的值(30, 20, 10, …)，總共9個data值都沒有被過濾掉。<br />
+所以 <em>.enter()</em> 以下的指令都會被執行9次，每次使用一個dataset裡面的一個值。</p>
+
+<p><br /></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="s2">"rect"</span><span class="p">)</span>
+</code></pre>
+</div>
+<p>這句比較好懂，簡單的說，就是把所有經過.enter()過濾的data綁上”rect”這個元素。<br />
+現在我們所有在dataset裡的值都已經有了元素代表 “rect”。 <br />
+所以如果我們之後再用 <em>.enter()</em> 的話， <em>.enter()</em> 就會過濾掉我們所有dataset。<br />
+懂了嗎？</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="nx">svg</span><span class="p">.</span><span class="nx">selectAll</span><span class="p">(</span><span class="s2">"rect"</span><span class="p">)</span>
+         <span class="p">.</span><span class="nx">data</span><span class="p">(</span><span class="nx">dataset</span><span class="p">)</span>
+         <span class="p">.</span><span class="nx">enter</span><span class="p">()</span>
+         <span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="s2">"rect"</span><span class="p">)</span>
+</code></pre>
+</div>
+<p>所以這四句簡單來說就是:<br />
+ 1.先選擇我們<strong>未來</strong>要加到html檔上的”rect”<br />
+ 2.跟D3說我們要用的data是我們已經宣告的dataset array<br />
+ 3.過濾掉已經有元素代表的data值，然後用沒被過濾掉的data值執行以下指令。因為我們的dataset還沒有任何元素代表所以不會被過濾掉。<br />
+ 4.將我們所有dataset裏的值都綁上”rect”這個元素。</p>
+
+<p>不懂的話，建議把這頁多看幾遍。因為這是D3重要的技巧。</p>
+
+<p>確定弄懂之後繼續加入:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="nx">svg</span><span class="p">.</span><span class="nx">selectAll</span><span class="p">(</span><span class="s2">"rect"</span><span class="p">)</span>
+         <span class="p">.</span><span class="nx">data</span><span class="p">(</span><span class="nx">dataset</span><span class="p">)</span>
+         <span class="p">.</span><span class="nx">enter</span><span class="p">()</span>
+         <span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="s2">"rect"</span><span class="p">)</span>
+         <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s2">"x"</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">,</span> <span class="nx">i</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="nx">i</span> <span class="o">*</span> <span class="p">(</span><span class="nx">svg_width</span> <span class="o">/</span> <span class="nx">dataset</span><span class="p">.</span><span class="nx">length</span><span class="p">);</span>
+         <span class="p">})</span>
+         <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s2">"y"</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="nx">svg_height</span> <span class="o">-</span> <span class="p">(</span><span class="nx">d</span> <span class="o">*</span> <span class="mi">4</span><span class="p">);</span>
+         <span class="p">})</span>
+</code></pre>
+</div>
+<p>記得我們上面說 <em>enter()</em> 過濾之後的data值都會被執行9次嗎？ (dataset裡共9個data值)</p>
+
 
   </article>
 

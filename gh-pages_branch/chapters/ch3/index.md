@@ -336,6 +336,100 @@ svg.selectAll("rect")
             return d * 4;
          })
 ```
+主要是這兩個新的code:
+
+```javascript
+.attr("width", svg_width / dataset.length)
+.attr("height", function(d) {
+  return d * 4;
+})
+```
+設定完每個值的長方形的座標之後，我們必須要設定他們的大小。
+這兩個屬性其實非常好懂，顧名思義就是長方形的長寬。
+Width = 寬，Height = 長。
+也就是說，我們的每個值的長方形都是 500/9 = 55.55 px (畫素)
+而長度就因data值而異。
+跟我們在設定座標是同樣道理。
+假如值是30:
+
+```javascript
+.attr("width", svg_width / dataset.length)
+.attr("height", function(d) {
+  return d * 4;
+})
+```
+會變成:
+
+```javascript
+.attr("width", 500 / 9)
+.attr("height", function(30) {
+  return 30 * 4;
+})
+```
+最終data值30的長方形，加上之前的x和y座標屬性，就會是一個在座標 (0, 80) 寬約55.5px和長120px的長方形。
+
+現在就是見證奇蹟的時刻，寫了這麼久個程式碼 (其實也才不過20幾行) 終於可以按下瀏覽器的重新整理按鈕！
+
+<img src="/chapters/ch3/img/first_draft.png" alt="..." style= "max-height:300px" class="img-thumbnail">
+
+看到長方形了嗎？那些就是我們加在html文件上綁著data值的長方形！
+雖然現在看起來還不是很起眼，不過醜小鴨也需要一點時間變天鵝。
+讓我們幫它上一點美麗的色彩！
+
+在 height 屬性之後加入 fill 這個屬性: 
+
+```javascript
+//continue...
+.attr("height", function(d) {
+  return d * 4;
+})
+.attr("fill", function(d) {
+  return "rgb(" +  d*5 + ",0 ,0 )";
+});
+```
+
+燈燈燈燈～ 我們的長方形進化了～ 
+
+<img src="/chapters/ch3/img/second_draft.png" alt="..." style= "max-height:300px" class="img-thumbnail">
+
+我們先花一點時間說一下 fill 這個屬性。這個屬性其實就是決定元素(rect)顏色的屬性。
+而我們在這邊用的是rgb顏色。
+
+```javascript
+.attr("fill", function(d) {
+  return "rgb(" +  d*5 + ",0 ,0 )";
+});
+```
+因為 d 為代數，所以當data值越高的時候顏色會越紅。
+有沒有發現值45的長方形最紅？
+
+我們的紅色長方形都擠在一起視覺上不太舒適。
+我們可以做一些微調，讓他們之間有些空隙。
+
+先在之前的代數 svg_height 之後宣告一個我們間隔要用的值(bar\_patting):
+
+```javascript
+var svg_width = 500;
+var svg_height = 200;
+var bar_padding = 5;
+```
+然後在屬性長方形width的地方改成這樣:
+
+```javascript
+.attr("width", svg_width / dataset.length - bar_padding)
+```
+也就是讓我們的長方形中間都間隔兩個 bar-padding 的值。
+
+按下重新整理～
+
+<img src="/chapters/ch3/img/padding.png" alt="..." style= "max-height:300px" class="img-thumbnail">
+
+
+如果你是第一次做D3，到目前為止都理解的話，代表你很有潛力。
+喝杯咖啡上個廁所，我們快要完成了！
+
+
+
 
 
 

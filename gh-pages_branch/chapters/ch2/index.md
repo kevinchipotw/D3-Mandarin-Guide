@@ -5,9 +5,7 @@ permalink: /ch2/
 ---
 ***
 
-前置作業:
-
-如果你已經會使用D3，可以直接跳過這一章。
+如果你已經會使用D3，可以直接跳過這一章到第三章。
 
 開始實作之前，我先簡單講解一些前置作業。要練功夫，要先把工具準備好。  
 製作D3視覺化需要以下資源:  
@@ -47,7 +45,7 @@ D3檔取得的方法有兩種:
 </html>
 ```
 
-如果真的懶得打字(非常不建議)，或遇到問題可直接&emsp;<a href="/chapters/ch2/code/ch2_index.html" download="index"><span class = "btn btn-success">下載index.html</span></a>
+如果真的懶得打字(非常不建議)，或遇到問題可直接&emsp;<a href="/chapters/ch2/code/index.html" download="index"><span class = "btn btn-success">下載index.html</span></a>
 
 在head標籤中坎入D3的js檔就能輕鬆的讓html檔跑D3的程式。看吧？夠簡單吧。
 在創造完這個html檔，你一定在想說我要怎麼用我的瀏覽器執行index.html。
@@ -55,6 +53,7 @@ D3檔取得的方法有兩種:
 首先開啟terminal, cd進入index.html存放位置。
 
 在輸入:
+
 ```python
 python -m SimpleHTTPServer
 ```
@@ -82,7 +81,7 @@ http://localhost:8000/
 
 <!-- ![browser](/chapters/ch2/img/browser.png) -->
 
-<img src="/chapters/ch2/img/browser.png" alt="..." style= "height:300px" class="img-thumbnail">
+<img src="/chapters/ch2/img/browser.png" alt="..." style= "max-height:300px" class="img-thumbnail">
 <br>
 
 實作影片:

@@ -318,7 +318,100 @@ D3選擇的是你未來要加入到html文件中的元素。<br />
          <span class="p">})</span>
 </code></pre>
 </div>
-<p>記得我們上面說 <em>enter()</em> 過濾之後的data值都會被執行9次嗎？ (dataset裡共9個data值)</p>
+<p>記得我們上面說 <em>enter()</em> 過濾之後的data值都會被執行9次嗎？ (dataset裡共9個data值)<br />
+而且每次執行時候會運用一個dataset裡面的值。<br />
+所以簡單來說，dataset裏的每一個值都會執行:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s2">"x"</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">,</span> <span class="nx">i</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="nx">i</span> <span class="o">*</span> <span class="p">(</span><span class="nx">svg_width</span> <span class="o">/</span> <span class="nx">dataset</span><span class="p">.</span><span class="nx">length</span><span class="p">);</span>
+<span class="p">})</span>
+<span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s2">"y"</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="nx">svg_height</span> <span class="o">-</span> <span class="p">(</span><span class="nx">d</span> <span class="o">*</span> <span class="mi">4</span><span class="p">);</span>
+<span class="p">})</span>
+</code></pre>
+</div>
+<p>OK，那attr(attribute屬性) “x” 跟 “y” 又是什麼呢？<br />
+答案是x跟y的座標，也就是說每個data值綁上的長方形的座標。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">dataset</span> <span class="o">=</span> <span class="p">[</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">45</span> <span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">35</span> <span class="p">,</span> <span class="mi">18</span><span class="p">];</span>
+</code></pre>
+</div>
+<p>我們現在在設定每個data值的長方形的座標。<br />
+先假設我們現在在跑data值 30(dataset中的第一個)。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s2">"x"</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">,</span> <span class="nx">i</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="nx">i</span> <span class="o">*</span> <span class="p">(</span><span class="nx">svg_width</span> <span class="o">/</span> <span class="nx">dataset</span><span class="p">.</span><span class="nx">length</span><span class="p">);</span>
+<span class="p">})</span>
+</code></pre>
+</div>
+<p>執行值30的時候會變成:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s2">"x"</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="mi">0</span> <span class="o">*</span> <span class="p">(</span><span class="mi">500</span> <span class="o">/</span> <span class="mi">9</span><span class="p">);</span>
+<span class="p">})</span>
+</code></pre>
+</div>
+<p>代數(variable)的變化為:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="nx">d</span> <span class="o">=</span> <span class="mi">30</span>
+<span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="nx">svg_width</span> <span class="o">=</span> <span class="mi">500</span>
+<span class="nx">dataset</span><span class="p">.</span><span class="nx">length</span> <span class="o">=</span> <span class="mi">9</span>
+</code></pre>
+</div>
+<p>因為d代表著data的值，也就是30。<br />
+i 代表著dataset array 的元素指數。因為30是array第一個，所以是 0。<br />
+svg_width 跟 dataset.length 應該就不用再解釋了。</p>
+
+<p>所以，當我們跑30這個值的時候，這個值的長方形的x座標會是 0。 <br />
+0 * (500 / 9) = 0</p>
+
+<p>屬性(attribute) y 也是同樣道理。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s2">"y"</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="nx">svg_height</span> <span class="o">-</span> <span class="p">(</span><span class="nx">d</span> <span class="o">*</span> <span class="mi">4</span><span class="p">);</span>
+<span class="p">})</span>
+</code></pre>
+</div>
+<p>執行值30的時候會變成:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s2">"y"</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="mi">30</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="nx">svg_height</span> <span class="o">-</span> <span class="p">(</span><span class="mi">30</span> <span class="o">*</span> <span class="mi">4</span><span class="p">);</span>
+<span class="p">})</span>
+</code></pre>
+</div>
+<p>svg_height 是200，所以 y = 200 -120 = 80。<br />
+這裏要先解釋一下D3對height的理解有點不一樣。</p>
+
+<p><img src="/chapters/ch3/img/height.png" alt="..." style="max-height:150px" class="img-thumbnail" /></p>
+
+<p>D3對height(高度)的理解是最頂端為 0，依圖所示。<br />
+Height越高代表離svg上方界線越遠。<br />
+Width(寬度)則是和常理相同。</p>
+
+<p>總和言之，我們值 30 所綁上的長方形(rect)會出現在svg上的座標(0, 80)。<br />
+而dataset裏的每個值都會執行一樣的指令來設定每個值的長方形座標。</p>
+
+<p>呼～ 喘口氣，關關難過關關過。</p>
+
+<p>接下來輸入:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="nx">svg</span><span class="p">.</span><span class="nx">selectAll</span><span class="p">(</span><span class="s2">"rect"</span><span class="p">)</span>
+         <span class="p">.</span><span class="nx">data</span><span class="p">(</span><span class="nx">dataset</span><span class="p">)</span>
+         <span class="p">.</span><span class="nx">enter</span><span class="p">()</span>
+         <span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="s2">"rect"</span><span class="p">)</span>
+         <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s2">"x"</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">,</span> <span class="nx">i</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="nx">i</span> <span class="o">*</span> <span class="p">(</span><span class="nx">svg_width</span> <span class="o">/</span> <span class="nx">dataset</span><span class="p">.</span><span class="nx">length</span><span class="p">);</span>
+         <span class="p">})</span>
+         <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s2">"y"</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="nx">svg_height</span> <span class="o">-</span> <span class="p">(</span><span class="nx">d</span> <span class="o">*</span> <span class="mi">4</span><span class="p">);</span>
+         <span class="p">})</span>
+         <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s2">"width"</span><span class="p">,</span> <span class="nx">svg_width</span> <span class="o">/</span> <span class="nx">dataset</span><span class="p">.</span><span class="nx">length</span><span class="p">)</span>
+         <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s2">"height"</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="nx">d</span> <span class="o">*</span> <span class="mi">4</span><span class="p">;</span>
+         <span class="p">})</span>
+</code></pre>
+</div>
 
 
   </article>

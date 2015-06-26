@@ -243,12 +243,99 @@ svg.selectAll("rect")
          })
 ```
 記得我們上面說 _enter()_ 過濾之後的data值都會被執行9次嗎？ (dataset裡共9個data值)
+而且每次執行時候會運用一個dataset裡面的值。
+所以簡單來說，dataset裏的每一個值都會執行:
 
+```javascript
+.attr("x", function(d, i) {
+  return i * (svg_width / dataset.length);
+})
+.attr("y", function(d) {
+  return svg_height - (d * 4);
+})
+```
+OK，那attr(attribute屬性) "x" 跟 "y" 又是什麼呢？
+答案是x跟y的座標，也就是說每個data值綁上的長方形的座標。
 
+```javascript
+var dataset = [ 30, 20, 10, 40, 45 , 25, 15, 35 , 18];
+```
+我們現在在設定每個data值的長方形的座標。
+先假設我們現在在跑data值 30(dataset中的第一個)。
 
+```javascript
+.attr("x", function(d, i) {
+  return i * (svg_width / dataset.length);
+})
+```
+執行值30的時候會變成:
 
+```javascript
+.attr("x", function(30, 0) {
+  return 0 * (500 / 9);
+})
+```
+代數(variable)的變化為:
 
+```js
+d = 30
+i = 0
+svg_width = 500
+dataset.length = 9
+```
+因為d代表著data的值，也就是30。
+i 代表著dataset array 的元素指數。因為30是array第一個，所以是 0。
+svg_width 跟 dataset.length 應該就不用再解釋了。
 
+所以，當我們跑30這個值的時候，這個值的長方形的x座標會是 0。 
+0 * (500 / 9) = 0
+
+屬性(attribute) y 也是同樣道理。
+
+```javascript
+.attr("y", function(d) {
+  return svg_height - (d * 4);
+})
+```
+執行值30的時候會變成:
+
+```javascript
+.attr("y", function(30) {
+  return svg_height - (30 * 4);
+})
+```
+svg_height 是200，所以 y = 200 -120 = 80。
+這裏要先解釋一下D3對height的理解有點不一樣。
+
+<img src="/chapters/ch3/img/height.png" alt="..." style= "max-height:150px" class="img-thumbnail">
+
+D3對height(高度)的理解是最頂端為 0，依圖所示。
+Height越高代表離svg上方界線越遠。
+Width(寬度)則是和常理相同。
+
+總和言之，我們值 30 所綁上的長方形(rect)會出現在svg上的座標(0, 80)。
+而dataset裏的每個值都會執行一樣的指令來設定每個值的長方形座標。
+
+呼～ 喘口氣，關關難過關關過。
+
+接下來輸入:
+
+```javascript
+svg.selectAll("rect")
+         .data(dataset)
+         .enter()
+         .append("rect")
+         .attr("x", function(d, i) {
+            return i * (svg_width / dataset.length);
+         })
+         .attr("y", function(d) {
+            return svg_height - (d * 4);
+         })
+         .attr("width", svg_width / dataset.length)
+         .attr("height", function(d) {
+            return d * 4;
+         })
+```
 
 
 

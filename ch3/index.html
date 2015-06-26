@@ -412,6 +412,96 @@ Width(寬度)則是和常理相同。</p>
          <span class="p">})</span>
 </code></pre>
 </div>
+<p>主要是這兩個新的code:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s2">"width"</span><span class="p">,</span> <span class="nx">svg_width</span> <span class="o">/</span> <span class="nx">dataset</span><span class="p">.</span><span class="nx">length</span><span class="p">)</span>
+<span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s2">"height"</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="nx">d</span> <span class="o">*</span> <span class="mi">4</span><span class="p">;</span>
+<span class="p">})</span>
+</code></pre>
+</div>
+<p>設定完每個值的長方形的座標之後，我們必須要設定他們的大小。<br />
+這兩個屬性其實非常好懂，顧名思義就是長方形的長寬。<br />
+Width = 寬，Height = 長。<br />
+也就是說，我們的每個值的長方形都是 500/9 = 55.55 px (畫素)<br />
+而長度就因data值而異。<br />
+跟我們在設定座標是同樣道理。<br />
+假如值是30:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s2">"width"</span><span class="p">,</span> <span class="nx">svg_width</span> <span class="o">/</span> <span class="nx">dataset</span><span class="p">.</span><span class="nx">length</span><span class="p">)</span>
+<span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s2">"height"</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="nx">d</span> <span class="o">*</span> <span class="mi">4</span><span class="p">;</span>
+<span class="p">})</span>
+</code></pre>
+</div>
+<p>會變成:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s2">"width"</span><span class="p">,</span> <span class="mi">500</span> <span class="o">/</span> <span class="mi">9</span><span class="p">)</span>
+<span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s2">"height"</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="mi">30</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="mi">30</span> <span class="o">*</span> <span class="mi">4</span><span class="p">;</span>
+<span class="p">})</span>
+</code></pre>
+</div>
+<p>最終data值30的長方形，加上之前的x和y座標屬性，就會是一個在座標 (0, 80) 寬約55.5px和長120px的長方形。</p>
+
+<p>現在就是見證奇蹟的時刻，寫了這麼久個程式碼 (其實也才不過20幾行) 終於可以按下瀏覽器的重新整理按鈕！</p>
+
+<p><img src="/chapters/ch3/img/first_draft.png" alt="..." style="max-height:300px" class="img-thumbnail" /></p>
+
+<p>看到長方形了嗎？那些就是我們加在html文件上綁著data值的長方形！<br />
+雖然現在看起來還不是很起眼，不過醜小鴨也需要一點時間變天鵝。<br />
+讓我們幫它上一點美麗的色彩！</p>
+
+<p>在 height 屬性之後加入 fill 這個屬性: </p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="c1">//continue...</span>
+<span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s2">"height"</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="nx">d</span> <span class="o">*</span> <span class="mi">4</span><span class="p">;</span>
+<span class="p">})</span>
+<span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s2">"fill"</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="s2">"rgb("</span> <span class="o">+</span>  <span class="nx">d</span><span class="o">*</span><span class="mi">5</span> <span class="o">+</span> <span class="s2">",0 ,0 )"</span><span class="p">;</span>
+<span class="p">});</span>
+</code></pre>
+</div>
+
+<p>燈燈燈燈～ 我們的長方形進化了～ </p>
+
+<p><img src="/chapters/ch3/img/second_draft.png" alt="..." style="max-height:300px" class="img-thumbnail" /></p>
+
+<p>我們先花一點時間說一下 fill 這個屬性。這個屬性其實就是決定元素(rect)顏色的屬性。<br />
+而我們在這邊用的是rgb顏色。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s2">"fill"</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="s2">"rgb("</span> <span class="o">+</span>  <span class="nx">d</span><span class="o">*</span><span class="mi">5</span> <span class="o">+</span> <span class="s2">",0 ,0 )"</span><span class="p">;</span>
+<span class="p">});</span>
+</code></pre>
+</div>
+<p>因為 d 為代數，所以當data值越高的時候顏色會越紅。<br />
+有沒有發現值45的長方形最紅？</p>
+
+<p>我們的紅色長方形都擠在一起視覺上不太舒適。<br />
+我們可以做一些微調，讓他們之間有些空隙。</p>
+
+<p>先在之前的代數 svg_height 之後宣告一個我們間隔要用的值(bar_patting):</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">svg_width</span> <span class="o">=</span> <span class="mi">500</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">svg_height</span> <span class="o">=</span> <span class="mi">200</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">bar_padding</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
+</code></pre>
+</div>
+<p>然後在屬性長方形width的地方改成這樣:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s2">"width"</span><span class="p">,</span> <span class="nx">svg_width</span> <span class="o">/</span> <span class="nx">dataset</span><span class="p">.</span><span class="nx">length</span> <span class="o">-</span> <span class="nx">bar_padding</span><span class="p">)</span>
+</code></pre>
+</div>
+<p>也就是讓我們的長方形中間都間隔兩個 bar-padding 的值。</p>
+
+<p>按下重新整理～</p>
+
+<p><img src="/chapters/ch3/img/padding.png" alt="..." style="max-height:300px" class="img-thumbnail" /></p>
+
+<p>如果你是第一次做D3，到目前為止都理解的話，代表你很有潛力。<br />
+喝杯咖啡上個廁所，我們快要完成了！</p>
 
 
   </article>

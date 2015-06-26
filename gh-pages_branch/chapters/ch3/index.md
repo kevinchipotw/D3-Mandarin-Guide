@@ -11,6 +11,249 @@ permalink: /ch3/
 
 <a href="/chapters/ch3/code/index.html" download="index"><span class = "btn btn-success">下載長條圖成品</span></a>
 
+***
+
+首先照第二章的前置作業先將開一個local server執行index.html (不會的話請先詳閱第二章)
+index.html的code應如下:
+
+```html
+<!doctype html>
+<html>
+  <meta charset="UTF-8">
+  <head>
+    <script src ="http://d3js.org/d3.v3.min.js"></script>
+  </head>
+  <body>
+  	<h1>我的第一個D3</h1>
+
+  </body>
+</html>
+```
+
+之後再body標籤中輸入script標籤，讓html檔知道你輸入的code為js code。
+像這樣:
+
+```html
+<body>
+  <h1>我的第一個D3</h1>
+  <script type="text/javascript">
+
+  </script>
+
+</body>
+```
+
+現在我們就要開始做D3的編程了！
+**以下的程式碼務必打在上面的script tag裡。**
+像這樣:
+
+```html
+<script type="text/javascript">
+	// 以下的code...
+</script>
+```
+懂了嗎? 這個指示很重要。
+
+首先我們要先設定svg的性質，因為我們要在svg上呈現我們的資料圖形。
+可以將svg想成一塊布，當你要畫在一塊布上面的時候，是否先決定布的大小? D3同理。
+所以接下來我們所輸入的code你將不會在瀏覽器上看到圖形，因為我們要先訂出我們的白布的尺寸。
+(因為是白色的所以看不到...)
+GO!
+
+先宣布兩個數值: 
+
+```javascript
+var svg_width = 500;
+var svg_height= 200;
+```
+svg_width = svg寬度
+svg_heigh = svg長度
+這兩個值是我們之後要用來設定svg(布)的長寬用的。
+**但目前只是訂出了大小，但還設定svg！**
+之後加上:
+
+```javascript
+var dataset = [ 30, 20, 10, 40, 45 , 25, 15, 35 , 18];
+```
+這是我們要視覺化的data。
+這邊先稍微講解一下這個data的結構，dataset的結構為array。
+因此我們如果要取得裡面的一個值，可以用 _dataset[i]_。
+i 為元素指數(數字)。
+EX: 如果我要取得dataset中 '10' 這個值。
+可以用 _dataset[2]_。
+這個如果不懂的話，先去看看一些Javascript data結構的書再繼續讀。
+這邊不做過多解釋。
+
+在輸入完dataset之後，我們要用我們之前訂出的大小來**設定svg了**。
+輸入:
+
+```javascript
+var svg = d3.select("body")
+	.append("svg")
+	.attr("width", svg_width)
+	.attr("height", svg_height);
+```
+看不懂嗎? 沒關係，這就是為什麼你要看這本實戰手冊。
+首先，可以先看等號的右邊的編程。
+
+```javascript
+d3.select("body")
+```
+這行code是我們在跟D3說我要把元素加在body標籤中。
+記得這個嗎?
+
+```html
+<!doctype html>
+<html>
+  <meta charset="UTF-8">
+  <head>
+    <script src ="http://d3js.org/d3.v3.min.js"></script>
+  </head>
+  <body>
+  	<h1>我的第一個D3</h1>
+
+  </body>
+</html>
+```
+我們在跟D3說我們要把元素加在<body>跟</body>之間。
+我們要加什麼東西呢？
+
+```javascript
+d3.select("body")
+  .append("svg")
+```
+加svg，append的中文就是加上的意思。
+所以append("svg")就是說我要在body標籤中加上svg元素。
+Easy~
+接下來:
+
+```javascript
+d3.select("body")
+  .append("svg")
+  .attr("width", svg_width)
+  .attr("height", svg_height);
+```
+這兩行attr程式碼，就是我們在跟D3說svg的大小。
+前面我們不是有設定svg_width 跟 svg\_height？
+
+```javascript
+var svg_width = 500;
+var svg_height= 200;
+```
+現在這兩行attr就是在用那兩個數值來設定svg的長寬。
+
+現在我們的code有:
+
+```html
+<script type="text/javascript">
+  var svg_width = 500;
+  var svg_height = 200;
+
+  var dataset = [ 30, 20, 10, 40, 45 , 25, 15, 35 , 18];
+
+  var svg = d3.select("body")
+        .append("svg")
+        .attr("width", svg_width)
+        .attr("height", svg_height);
+
+</script>
+```
+現在我們已經在我們的html文件中有一個寬500px * 長200px的svg元素和我們要呈現的data array。
+
+OK，先深呼吸。因為接下為重頭戲。
+現在我們必須把data呈現/畫到我們所設定的svg上。
+怎麼做呢？
+輸入: 
+
+```javascript
+svg.selectAll("rect")
+         .data(dataset)
+         .enter()
+         .append("rect")
+```
+許多人都認為這是D3最難懂的地方，不過其實理解後道理其實很簡單。
+
+```javascript
+svg.selectAll("rect")
+```
+這行code先select(選擇)了我們html文件中的 "rect" 元素。
+也許你會說我們在文件上並沒有任何 "rect" 元素，那D3要如和選擇那些元素呢？
+其實D3在這個地方所做的是一個empty selection。也就是說他沒有選擇任何元素。
+D3選擇的是你未來要加入到html文件中的元素。
+先繼續看下去。
+
+```javascript
+.data(dataset)
+```
+這行是說，我們要用的data是我們已經宣告的dataset array
+
+```javascript
+.enter()
+```
+_.enter()_ 是一個比較特殊的語法。
+可以把它想成一個過濾網，過濾掉data值。
+那他是要過濾掉什麼data值呢？
+_.enter()_ 會過濾掉html上已經有元素代表的data。
+因為在我們的html文件上還沒有任何元素代表我們的dataset，所以所有的dataset都不會被排除/過濾。
+而通過.enter所過濾的所有值都會執行.enter()以下的指令。
+所以以我們的dataset來講:
+
+```javascript
+var dataset = [ 30, 20, 10, 40, 45 , 25, 15, 35 , 18];
+```
+因為所有的值(30, 20, 10, ...)，總共9個data值都沒有被過濾掉。
+所以 _.enter()_ 以下的指令都會被執行9次，每次使用一個dataset裡面的一個值。
+
+<br>
+
+```javascript
+.append("rect")
+```
+這句比較好懂，簡單的說，就是把所有經過.enter()過濾的data綁上"rect"這個元素。
+現在我們所有在dataset裡的值都已經有了元素代表 "rect"。 
+所以如果我們之後再用 _.enter()_ 的話， _.enter()_ 就會過濾掉我們所有dataset。
+懂了嗎？
+
+```javascript
+svg.selectAll("rect")
+         .data(dataset)
+         .enter()
+         .append("rect")
+```
+所以這四句簡單來說就是:
+&emsp;1.先選擇我們**未來**要加到html檔上的"rect"
+&emsp;2.跟D3說我們要用的data是我們已經宣告的dataset array
+&emsp;3.過濾掉已經有元素代表的data值，然後用沒被過濾掉的data值執行以下指令。因為我們的dataset還沒有任何元素代表所以不會被過濾掉。
+&emsp;4.將我們所有dataset裏的值都綁上"rect"這個元素。
+
+不懂的話，建議把這頁多看幾遍。因為這是D3重要的技巧。
+
+確定弄懂之後繼續加入:
+
+```javascript
+svg.selectAll("rect")
+         .data(dataset)
+         .enter()
+         .append("rect")
+         .attr("x", function(d, i) {
+            return i * (svg_width / dataset.length);
+         })
+         .attr("y", function(d) {
+            return svg_height - (d * 4);
+         })
+```
+記得我們上面說 _enter()_ 過濾之後的data值都會被執行9次嗎？ (dataset裡共9個data值)
+
+
+
+
+
+
+
+
+
+
+
 
 
 

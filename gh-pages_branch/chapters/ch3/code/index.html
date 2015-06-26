@@ -13,9 +13,9 @@
 
   	<script type="text/javascript">
 
-			//Set width and height
-			var width = 500;
-			var height = 200;
+			//Set svg_width and svg_height
+			var svg_width = 500;
+			var svg_height = 200;
 
 			var bar_padding = 5;
 			
@@ -24,8 +24,8 @@
 			//make SVG element
 			var svg = d3.select("body")
 						.append("svg")
-						.attr("width", width)
-						.attr("height", height);
+						.attr("width", svg_width)
+						.attr("height", svg_height);
 
 			//make rectangle
 			svg.selectAll("rect")
@@ -33,12 +33,12 @@
 			   .enter()
 			   .append("rect")
 			   .attr("x", function(d, i) {
-			   		return i * (width / dataset.length);
+			   		return i * (svg_width / dataset.length);
 			   })
 			   .attr("y", function(d) {
-			   		return height - (d * 4);
+			   		return svg_height - (d * 4);
 			   })
-			   .attr("width", width / dataset.length - bar_padding)
+			   .attr("width", svg_width / dataset.length - bar_padding)
 			   .attr("height", function(d) {
 			   		return d * 4;
 			   })
@@ -56,10 +56,10 @@
 			   })
 			   .attr("text-anchor", "middle")
 			   .attr("x", function(d, i) {
-			   		return i * (width / dataset.length) + (width / dataset.length - bar_padding) / 2;
+			   		return i * (svg_width / dataset.length) + (svg_width / dataset.length - bar_padding) / 2;
 			   })
 			   .attr("y", function(d) {
-			   		return height - (d * 4) + 20;
+			   		return svg_height - (d * 4) + 20;
 			   })
 			   .attr("font-family", "sans-serif")
 			   .attr("font-size", "20px")

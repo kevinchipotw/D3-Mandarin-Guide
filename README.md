@@ -3,6 +3,8 @@
 
 此Repository為D3中文實戰教學手冊的Github Repository。  
 閱讀教學手冊: <a href="http://d3mandaringuide.com/" target="_blank">閱讀</a>  
+This is a repository for a mandarin D3 tutorial.  
+To read the book <a href="http://d3mandaringuide.com/" target="_blank">click here</a>. 
 
 
 專案目標 Project Goal: 

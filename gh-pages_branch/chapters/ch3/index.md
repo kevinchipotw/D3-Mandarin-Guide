@@ -5,7 +5,7 @@ permalink: /ch3/
 ---
 ***
 
-成品圖:  
+#### 成品圖:  
 
 <img src="/chapters/ch3/img/product.png" alt="..." style= "max-height:300px" class="img-thumbnail">
 
@@ -13,6 +13,7 @@ permalink: /ch3/
 
 ***
 
+#### 製作步驟: 
 首先照第二章的前置作業先將開一個local server執行index.html (不會的話請先詳閱第二章)
 index.html的code應如下:
 
@@ -193,8 +194,8 @@ D3選擇的是你未來要加入到html文件中的元素。
 _.enter()_ 是一個比較特殊的語法。
 可以把它想成一個過濾網，過濾掉data值。
 那他是要過濾掉什麼data值呢？
-_.enter()_ 會過濾掉html上已經有元素代表的data。
-因為在我們的html文件上還沒有任何元素代表我們的dataset，所以所有的dataset都不會被排除/過濾。
+_.enter()_ 會過濾掉html上已經有 "rect" (我們的empty selection) 元素代表的data值。
+因為dataset中的data值都沒有 "rect" 這個元素代表。所以所有在dataset中的data值都不會被排除/過濾。
 而通過.enter所過濾的所有值都會執行.enter()以下的指令。
 所以以我們的dataset來講:
 
@@ -283,7 +284,7 @@ i = 0
 svg_width = 500
 dataset.length = 9
 ```
-因為d代表著data的值，也就是30。
+因為d代表著被執行的data值，也就是30。
 i 代表著dataset array 的元素指數。因為30是array第一個，所以是 0。
 svg_width 跟 dataset.length 應該就不用再解釋了。
 
@@ -427,6 +428,112 @@ var bar_padding = 5;
 
 如果你是第一次做D3，到目前為止都理解的話，代表你很有潛力。
 喝杯咖啡上個廁所，我們快要完成了！
+
+現在我們有了許多長方形，但我們卻不知道每個長方形的data值為多少。
+所以接下來我們必須在每個長方形上加上數字，讓我們的圖表更簡單易懂。
+
+用我們增加長方形的相同語法，在 svg.selectAll("rect") 那一段code**之後加上:
+
+```javascript
+//svg.selectAll("rect") 
+  //那一大段code...
+
+svg.selectAll("text")
+   .data(dataset)
+   .enter()
+   .append("text")
+```
+新增的這一段跟我們增加長方形的方法一樣。
+先對 "text" 元素做一個empty selection，因為我們html上沒有還沒有任何 text 元素。
+宣告我們要用的 data 是我們的 dataset array。
+用 _.enter()_ 過濾的已經有 text 元素代表的 data值，但因為所有在 dataset 裡的 data 值都沒有 "text" 這個元素代表 (只有我們綁上的 "rect" 元素)。所以全部 9 個 data 值都不會被過濾掉。
+然後再將過濾過的 data 值都綁上 "text" 元素。
+之後加上:
+
+```javascript
+.text(function(d) {
+  return d;
+})
+```
+這個程式碼會告訴D3我們要顯示什麼文字。因為我們要顯示的是 data 值，所以用 return d。
+d一樣代表著被執行的data值跟上段增加長方形原理相同。
+然後輸入:
+
+```javascript
+.attr("x", function(d, i) {
+  return i * (svg_width / dataset.length) + (svg_width / dataset.length  - bar_padding) / 2;
+})
+.attr("y", function(d) {
+  return svg_height - (d * 4) + 20;
+})
+```
+這兩段設定 x 跟 y 屬性的code，跟我們設定我們長方形的 x 跟 y 座標相同。
+以上 3 段 code 如果用 data 值 30 執行的話會是:
+
+```javascript
+.text(function(30) {
+  return 30;
+})
+.attr("x", function(30, 0) {
+  return 0 * (500 / 9) + (500 / 9 - 5 ) / 2;
+})
+.attr("y", function(d) {
+  return 200 - (30 * 4) + 20;
+})
+```
+大家可以試著套用每一個 data 值和條條看 x 跟 y 的 return 值來抓到 D3 對座標的理解。
+按下重新整理。
+
+<img src="/chapters/ch3/img/text_without_padding.png" alt="..." style= "max-height:300px" class="img-thumbnail">
+
+看到我們在長方形上的每一個 text 都往右邊歪嗎？
+所以我們要加上:
+
+```javascript
+.attr("text-anchor", "middle")
+.attr("x", function(d, i) {
+  return i * (svg_width / dataset.length) + (svg_width / dataset.length - bar_padding) / 2;
+})
+```
+加在 x 屬性的上面。
+重新整理。
+
+<img src="/chapters/ch3/img/text_middle.png" alt="..." style= "max-height:300px" class="img-thumbnail">
+
+文字調整到中間了！
+最後再加上一點美化的屬性。
+整段的 code 最終為:
+
+```javascript
+svg.selectAll("text")
+     .data(dataset)
+     .enter()
+     .append("text")
+     .text(function(d) {
+        return d;
+     })
+     .attr("text-anchor", "middle")
+     .attr("x", function(d, i) {
+        return i * (svg_width / dataset.length) + (svg_width / dataset.length - bar_padding) / 2;
+     })
+     .attr("y", function(d) {
+        return svg_height - (d * 4) + 20;
+     })
+     .attr("font-family", "sans-serif")
+     .attr("font-size", "20px")
+     .attr("fill", "white");
+```
+稍微解釋一下，"font-family" 這個屬性會宣告我們要什麼樣的字體。
+"font-size" 就是字體大小。
+最後 "fill"，就是字體顏色，跟長方形的顏色屬性一樣。
+
+重新整理～最後一次。
+
+<img src="/chapters/ch3/img/product.png" alt="..." style= "max-height:300px" class="img-thumbnail">
+
+我們完成了簡易的長條圖！
+
+
 
 
 

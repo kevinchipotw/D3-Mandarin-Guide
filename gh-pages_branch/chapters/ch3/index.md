@@ -3,6 +3,15 @@ layout: page
 title: 第三章 - 長條圖
 permalink: /ch3/
 ---
+
+<div>
+  <span style = "float: left">
+    <a href = "/ch2/">第二章 - 前置作業</a>
+  </span>
+
+</div>
+<br>
+
 ***
 
 #### 成品圖:  
@@ -537,7 +546,18 @@ svg.selectAll("text")
 
 <a href="/chapters/ch3/code/index.html" download="index"><span class = "btn btn-success">下載長條圖成品</span></a>
 
+***
 
+<div>
+  <span style = "float: left">
+    <a href = "/ch2/">第二章 - 前置作業</a>
+  </span>
+
+</div>
+<br>
+<div>
+  <a href = "/">回到章節導覽</a>
+</div>
 
 
 

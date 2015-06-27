@@ -3,6 +3,10 @@ layout: page
 title: 第一章 - D3基本介紹
 permalink: /ch1/
 ---
+
+<div style = "float: right"><a href = "/ch2/">第二章 - 前置作業</a></div>
+<br>
+
 ***
 
 什麼是D3? 
@@ -15,11 +19,22 @@ permalink: /ch1/
 基本上D3要將data呈現在網頁上有兩個基本的要素。一個svg element和至少一個你想要呈現的data。可以將svg想成一塊你要把data畫在上面的布。而D3的功能就是將你的data視覺呈現在你設定的svg上。
 
 一般基本D3呈現流程為:  
-1. 設定svg  
-2. 將data讀入browser記憶體  
-3. 將data分類儲存成你要的格式  
-4. 將data綁在視窗上的網頁元素(elements)  
-5. 使用網頁元素綁上的data將網頁元素視覺化  
-6. 依照使用者操作變化網頁元素的視覺元素，達到互動的效果  
+&emsp;1. 設定svg  
+&emsp;2. 將data讀入browser記憶體  
+&emsp;3. 將data分類儲存成你要的格式  
+&emsp;4. 將data綁在視窗上的網頁元素(elements)  
+&emsp;5. 使用網頁元素綁上的data將網頁元素視覺化  
+&emsp;6. 依照使用者操作變化網頁元素的視覺元素，達到互動的效果  
 
 在經過抽象的敘述後，你一定還對D3很陌生。不過沒關係，相信在經過幾的實例之後你也能輕鬆地做出視覺化的效果。讓我們趕快開始吧！
+
+***
+
+<div style = "float: right"><a href = "/ch2/">第二章 - 前置作業</a></div>
+<br>
+<div>
+	<a href = "/">回到章節導覽</a>
+</div>
+
+
+

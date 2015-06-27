@@ -3,6 +3,17 @@ layout: page
 title: 第二章 - 前置作業
 permalink: /ch2/
 ---
+
+<div>
+	<span style = "float: left">
+		<a href = "/ch1/">第一章 - D3基本介紹</a>
+	</span>
+	<span style = "float: right">
+		<a href = "/ch3/">第三章 - 長條圖</a>
+	</span>
+</div>
+<br>
+
 ***
 
 如果你已經會使用D3，可以直接跳過這一章到第三章。
@@ -89,8 +100,21 @@ http://localhost:8000/
 如果不是的話，那請你先把第二章再讀一次。  
 前置完成之後，接下來我們就要來累積一些實戰經驗了！Let's GO！
 
+***
 
+<div>
+	<span style = "float: left">
+		<a href = "/ch1/">第一章 - D3基本介紹</a>
+	</span>
 
+	<span style = "float: right">
+		<a href = "/ch3/">第三章 - 長條圖</a>
+	</span>
+</div>
+<br>
+<div>
+	<a href = "/">回到章節導覽</a>
+</div>
 
 
 

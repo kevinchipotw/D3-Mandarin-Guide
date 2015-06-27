@@ -9,6 +9,7 @@ permalink: /about/
 
 此專案將著重於實戰例子快速協助中文讀者瞭解和學習D3的編成流程與技巧。本手冊內容將使用繁體中文，並用網頁的方式呈現內容。
 
-D3中文實戰教學手冊為開放原始碼(Open Source)，如有興趣加入或參與請 fork 和 send pull request。  <br>
+如有興趣加入或參與請閱: <a class = "page-link" href = "/collaborate/">關於合作</a>
+
 Github: <a href="https://github.com/kevinchipotw/d3-mandarin-guide" target="_blank">d3-mandarin-guide</a>  
 Email: kevinjipotw@gmail.com

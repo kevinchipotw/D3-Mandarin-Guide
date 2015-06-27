@@ -1,5 +1,5 @@
 # d3-mandarin-guide
-## D3中文實戰教學手冊
+## D3.js 中文實戰教學
 
 此Repository為D3中文實戰教學手冊的Github Repository。  
 閱讀教學手冊: <a href="http://d3mandaringuide.com/" target="_blank">閱讀</a>  

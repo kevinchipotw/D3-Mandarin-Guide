@@ -144,7 +144,7 @@ d3.select("body")
   .attr("height", svg_height);
 ```
 這兩行attr程式碼，就是我們在跟D3說svg的大小。
-前面我們不是有設定svg_width 跟 svg\_height？
+前面我們不是有設定svg_width 跟 svg_height？
 
 ```javascript
 var svg_width = 500;

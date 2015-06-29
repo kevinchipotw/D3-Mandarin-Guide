@@ -26,7 +26,7 @@
 		var colors = d3.scale.category10(); 
 
 		var arc = d3.svg.arc() 
-			.innerRadius(0)
+			.innerRadius(radius - 70)
 			.outerRadius(radius - 20); 
 
 		var arcs = svg.selectAll("g.arc")

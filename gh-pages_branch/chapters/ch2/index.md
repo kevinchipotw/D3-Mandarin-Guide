@@ -46,6 +46,7 @@ D3檔取得的方法有兩種:
 <!doctype html>
 <html>
   <head>
+  	<meta charset="UTF-8">
     <script src ="http://d3js.org/d3.v3.min.js"></script>
   </head>
   <body>

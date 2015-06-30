@@ -27,6 +27,11 @@ permalink: /ch1/
 &emsp;6. 依照使用者操作變化網頁元素的視覺元素，達到互動的效果  
 
 在經過抽象的敘述後，你一定還對D3很陌生。不過沒關係，相信在經過幾的實例之後你也能輕鬆地做出視覺化的效果。讓我們趕快開始吧！
+<br>
+
+<iframe width="420" height="250"
+src="http://www.youtube.com/embed/pRiY0PhjTm8">
+</iframe>
 
 ***
 

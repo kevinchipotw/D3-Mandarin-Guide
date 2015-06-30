@@ -8,11 +8,11 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>D3.js 中文實戰教學</title>
+  <title>為什麼要學數據呈現？</title>
   <meta name="description" content="">
 
   <link rel="stylesheet" href="/css/main.css">
-  <link rel="canonical" href="http://yourdomain.com/">
+  <link rel="canonical" href="http://yourdomain.com/introduction/">
   <link rel="alternate" type="application/rss+xml" title="D3.js 中文實戰教學" href="http://yourdomain.com/feed.xml" />
 
   <!-- jquery -->
@@ -77,71 +77,43 @@
 
     <div class="page-content">
       <div class="wrapper">
-        <link rel="stylesheet" type="text/css" href="css/index.css">
+        <div class="post">
 
-<div class="home">
+  <header class="post-header">
+    <h2>為什麼要學數據呈現？</h2>
+  </header>
 
-  <h1 class="page-heading">教學手冊簡介</h1>
+  <article class="post-content">
+    <hr />
+<p>為什麼要學數據呈現？</p>
 
-  <div class = "intro">
-    <p>
-      本書不會解釋基本的html, css 跟javascript 功能，不會呈現過於專業的高難度技術，更不會讓你一天就變成D3專家。這個新手教學適合有基本html, css跟javascript 技術又想學最新D3技術的工程師。此書將透過最有效的實戰演練教您D3的入門技術，讓您能輕鬆越過一開始的新手學習障礙(Learning curve)，再獨自專研D3或將其應用在自己的領域。<br><br>
+<p>自從地二十世紀期，我們的世界開始產一場革命，一場隱形卻使得全世界走向一個前所未見的資訊革命。因為當時網際網路正呱呱墜地，我們之前所在書籍上記錄的資訊和知識都獲的了一個無限制，無疆界的平台來和全世界的人分享。在如雨後春筍般的資訊在網際網路上被公諸於世，我們所接受的資訊常常為我們解決我們一開始毫無頭緒的問題。這些資訊雖然非常的便利，我們卻常常會被這些資訊所帶來的 ”雜音“而被迷惑視聽。慶幸的是，我們身為人類是具有非常敏感的視覺觀點。如果我們看到一個條線圖，我們的直覺會告訴我們比較長的條狀代表比較多而比較短代表比較少。就連我們的小朋友在認識任何的數學計算邏輯之前就可以了解這一點。這簡直是讓人類了解資料的最好方法，真的是一目了然。</p>
 
-      此教學將先講解D3的基礎概念，之後再用實例演練來進一步教學如何使用D3。<br>
-      每章實例教學將先呈現成品圖與成品檔載點，以供學習者先觀察成品結果，讓學習更加順利。<br>
-      每個實例也附有教學影片，教學影片將以新手角度，跟學習者一起操作實例。<br>
-      D3中文實戰教學讓學習者以閱讀文章、觀看影片和聆聽操作者解釋的多重角度達到輕鬆學習D3的最佳效果。<br>
+<p>在經過圖表的呈現，就算在索然無味的表格式數據都可以以各式各樣的方式呈線，從簡單的折線圖乃至花俏的動畫呈現。而在這一本書之中，我們將要探討的語言是：D3 亦稱為 Data-Driven Documents，一種二零一一年被一位史丹福博士生麥克博史達克 Mike Bostock 所創造的。 </p>
 
-      本文以實作以Mac操作系统為主，但Html和遊覽器操作Mac和Windows操作大同小異，所以不用過於擔心。<br><br>
-      本書為Open source。在讀完之後如果您覺得受益良多，想要貢獻或合作我們都非常歡迎。<br>
-      請閱: <a class = "page-link" href = "/collaborate/">關於合作</a> 
-      &emsp; Github: <a href="https://github.com/kevinchipotw/d3-mandarin-guide" target="_blank">d3-mandarin-guide</a> 
-      <br><br>
+<p>數據呈現是一種讓我們把被供給的資料加以形狀，顏色，和分佈。我們的目標，身為資料呈線顯者，是要設定各式各樣的規則讓所有的數據去遵守。資料因為被設定了一些性質和價值可以被簡單的操控。當然從 javascript 而衍伸而來的 D3繼承了 javascript 一些非常重要的性質讓操縱 D3 的物件如同操縱 javascript 之物件。</p>
 
-      那麼你準備好跟上D3技術的浪潮了嗎？ 讓我們開始吧！
-      
-    </p>
-    <a href = "/ch1/"><div class="btn btn-success">馬上開始！</div></a>
-    <br><br>
+<p>以下 D3 的性質從 javascript 衍伸而來：</p>
 
-    <iframe width="420" height="250"
-    src="http://www.youtube.com/embed/vnNAVqlN9so">
-    </iframe>
+<div class="highlighter-rouge"><pre class="highlight"><code>  		1.物件導向設計（Object-oriented programming): 
+	繼承 javascript, D3 使用物件導向之設計模式。這種設計模式讓使用者可以把系統當成一連串的物件可以被控制後加以運用。就連我們一般不會認定為物件的程式元素在D3內都是以物件的方式呈現，列如：函示。
 
-  </div>
+ 		2.文件物件模式（Document Object Model): 
+	D3也運用了DOM（Document Object Model) 介面以呈現 HTML, XML, 和 SVG 之物件。DOM 是以一個樹狀分佈圖來傳連一份資料中所有的要素。就像一個家庭樹一樣，DOM 之中的要件跟其他的要件都有一個直接或間接的關聯。透過這一些關聯，D3讓它的使用者可以透過這一些關係來設定一些規則來操縱這些要素來呈現使用者想呈現的風格，結構，以己內容。
 
-
-  <div class="panel panel-primary">
-    <div class="panel-heading">手冊章節導覽</div>
-
-    <table class="table">
-      <a href = "/ch1/"><p class="list-group-item">第一章 - D3基本介紹</p></a>
-      <a href = "/ch2/"><p class="list-group-item">第二章 - 前置作業</p></a>
-      <a href = "/ch3/"><p class="list-group-item">第三章 - 長條圖</p></a>
-
-    
-    </table>
-  </div>
-
-
-  <!-- <ul class="post-list">
-    
-      <li>
-        <span class="post-meta">Jun 25, 2015</span>
-
-        <h2>
-          <a class="post-link" href="/jekyll/update/2015/06/25/welcome-to-jekyll.html">D3中文實戰教學手冊</a>
-        </h2>
-      </li>
-    
-
-  </ul> -->
-
-
+		3.良好的機動性: 
+	 D3項我分熟悉的HTML，CSS，和 Javascript 一樣供給使用者非常強大且方便的機動性。不像之前類似的 Processing.js, Paper.js 或 Raphael.js， D3 提供非常大的自由給使用者讓數據成蟹得以被專業化和客製化。
+</code></pre>
 </div>
 
+<p>為什麼要學習如何程式設計？</p>
+
+<p>相信大家處於這一個充滿改變的世界都已經感覺到科技為我們昇華所帶來各方面的革命。因為這場科技革命不會因為語言，地方，和拒絕聲浪而被有所拘樹，改變是必然會發生的，只是早晚的問題。人類總是害怕改變，但是隨著時間的進展，改編終究還是會發生。就像一位有名的美國作家吉本斯 (William Gibson)曾經所說的 “The future is already here.”，科技的革命已經出現而且已經在我們生活上各種方面做出前所未有的改變了！！面對這樣的前景，我們是不是加以適應這種以眨眼般的演變速度以便取得在未來改變之前就已經未雨綢繆了呢？當然程式設計聽起來可能沒有那麼好學、但是說實在的這就是人生。挑戰自己！或許你會有出乎意料的收穫！</p>
 
 
+  </article>
+
+</div>
 
       </div>
     </div>

@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html>
+
+  
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>第四章 - 圓餅圖</title>
+  <meta name="description" content="">
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="canonical" href="http://yourdomain.com/ch4/">
+  <link rel="alternate" type="application/rss+xml" title="D3.js 中文實戰教學" href="http://yourdomain.com/feed.xml" />
+
+  <!-- jquery -->
+  <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+
+  <!-- bootstrap -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+
+  <!-- custom css -->
+  <link rel="stylesheet" type="text/css" href="http://d3mandaringuide.com/css/custom_general.css">
+
+
+  <!-- GA -->
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-64535837-1', 'auto');
+  ga('send', 'pageview');
+
+  </script>
+
+
+</head>
+
+
+
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/">D3.js 中文實戰教學</a>
+
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      <div class="trigger">
+        <a class = "page-link" href = "/about/">關於這本書</a>
+        <a class = "page-link" href = "/collaborate/">關於合作</a>
+
+
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <div class="post">
+
+  <header class="post-header">
+    <h2>第四章 - 圓餅圖</h2>
+  </header>
+
+  <article class="post-content">
+    <hr />
+
+<h4 id="section">成品圖:</h4>
+
+<p><img src="/chapters/ch4/img/pie_chart_finished.png" alt="..." style="max-height:300px" class="img-thumbnail" /></p>
+
+<p><a href="/chapters/ch3/code/index.html" download="index"><span class="btn btn-success">下載長條圖成品</span></a></p>
+
+<hr />
+
+<h4 id="section-1">製作步驟:</h4>
+<p>首先照第二章的前置作業先將開一個local server執行index.html (不會的話請先詳閱第二章)<br />
+index.html的code應如下:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="c">&lt;!-- &lt;!DOCTYPE html&gt;  --&gt;</span>
+<span class="nt">&lt;html&gt;</span> 
+  <span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"UTF-8"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;script </span><span class="na">src =</span><span class="s">"http://d3js.org/d3.v3.min.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+  <span class="nt">&lt;/head&gt;</span>
+  <span class="nt">&lt;body&gt;</span>
+  	<span class="nt">&lt;h1&gt;</span>圓餅圖之資料呈現<span class="nt">&lt;/h1&gt;</span>
+
+  <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre>
+</div>
+
+<p>經過章節三介紹的長條圖，我們講來探討一樣非常普遍的圓餅圖。這啷裡所用到的技巧非常類似第三章裡所介紹的基本技巧，讓我們來開始吧！</p>
+
+<p>記得我們所有的程式碼都必須被script tag所圍起來。這樣一來，電腦就會認知這些程式碼為 javascript 程式碼。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span><span class="nt">&gt;</span>
+	<span class="c1">// 以下的code...</span>
+<span class="nt">&lt;/script&gt;</span>
+</code></pre>
+</div>
+
+<p>如同我們在第三章所做的，我們將先設定svg之性質（如果有不瞭解的地方，請參考第三章）值得一再強調的是，D3中的svg元件可被比喻成畫中之布，若我們不把想要呈現的元件加入svg的儔範之內，那些元件是不會呈現的！有了這一個重要的觀念，讓我們來一同探索吧！</p>
+
+<p>如同之前我們所做的，我們先設定svg元件的寬度和高度以及一個稱為radius的變數：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">svg_width</span> <span class="o">=</span> <span class="mi">500</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">svg_height</span><span class="o">=</span> <span class="mi">200</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">radius</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">min</span><span class="p">(</span><span class="nx">svg_width</span><span class="p">,</span> <span class="nx">svg_height</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
+</code></pre>
+</div>
+
+<p>radius變數指向一個數值物件。這個數值物件利用javascript之中Math.min()之方法來取得svg_width和svg_height兩數之中的較低數來處以二。<br />
+我們將利用之前用過的好用數據：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">dataset</span> <span class="o">=</span> <span class="p">[</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">45</span> <span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">35</span> <span class="p">,</span> <span class="mi">18</span><span class="p">];</span>
+</code></pre>
+</div>
+
+<p>不過目前為止，我們還未真正的建立我們後會用到的svg元件，我們目前為只只有創造了三個便數。還記得javascript這個語言是一種物件導向之程式設計語言，所以我們在此所做的事創造了三個物件，一個稱為svg_width之物件指向500之數值，另一個稱為svg_height之物件指向200之數職，而最後一稱為dataset之物件指向一個陣列為[ 30, 20, 10, 40, 45 , 25, 15, 35 , 18]。</p>
+
+<p>有了這個物件導向之程式設計觀，我們接下來會來創造我們討論許久的svg元件。如以下我們所做的：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">svg</span> <span class="o">=</span> <span class="nx">d3</span><span class="p">.</span><span class="nx">select</span><span class="p">(</span><span class="s2">"body"</span><span class="p">)</span>
+	<span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="s2">"svg"</span><span class="p">)</span>
+	<span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s2">"width"</span><span class="p">,</span> <span class="nx">svg_width</span><span class="p">)</span>
+	<span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s2">"height"</span><span class="p">,</span> <span class="nx">svg_height</span><span class="p">);</span>
+</code></pre>
+</div>
+
+<p>這段程式碼應該看起來很眼熟吧？因為我們在第三章也用了這段完全一樣的程式碼。如果有疑問，請參考第三章。大致上來說，我們在此所做的是創造了一個稱為svg之變數（和之前所做的一樣）。接著我們我們把這一個剛創造的svg變數透過D3所提供的方法</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>	<span class="nx">d3</span><span class="p">.</span><span class="nx">select</span><span class="p">()</span>
+</code></pre>
+</div>
+
+<p>來指定我們HTML檔案之中稱為”body”的物件。當然在我們的HTML檔案中只有一個稱為”body”的物件，所以svg指向的物件即是我們的“body”元件。接著，我們利用著一行程式碼：</p>
+
+<p>ˋˋˋjavascript<br />
+	.append(“svg”)<br />
+ ˋˋˋ</p>
+
+<p>來創造一個稱為svg之物件然後將此附加到我我們前一行所指定的body物件。這個svg變數存在的目的是為了提供我們“一塊布”讓我們能夠把想要呈現的物件加入並加以呈現。接著，我們利用.attr為這個svg物件設定它的高和寬屬性，在第一個參數中我們指定我們要改變之屬性接著在第二個參數我們把我們想設定的值輸入來。在此，我們用之前所創造的svg_width和svg_height之變數來設定svg物件之屬性。</p>
+
+<p>接著我們輸入：<br />
+ ˋˋˋjavscript <br />
+var pie = d3.layout.pie() </p>
+
+<p>var colors = d3.scale.category10(); </p>
+
+<p>var arc = d3.svg.arc() <br />
+		.innerRadius(radius - 70)<br />
+		.outerRadius(radius - 20); <br />
+ˋˋˋ</p>
+
+<p>D3是一個既懂得人性懶散又貼心之組織架構。它提供了許多的頁面佈局(layout)，使得使用者不用靠自己計算出一些很不友善的數值來自行設定佈局。這也是為什麼D3如此之強大。它使我們的數據呈現簡化的非常，非常多。以下是D3所提供的各種頁面佈局: </p>
+
+<ol> 
+	<li>Pie Layout</li>
+	<li>Stack Layout</li>
+	<li>Tree Layout</li>
+	<li>Force Layout</li>
+	<li>Bundle Layout</li>
+	<li>Cluster Layout</li>
+	<li>Chord Layout</li>
+	<li>Histogram Layout</li>
+	<li>Pack Layout</li>
+	<li>Partition Layout</li>
+</ol>
+
+<p>以上的頁面佈局之中，前三個為最常見的。而我們在之後也會一同探討這三個頁面佈局。當然因為我們在這章中所討論的是圓餅圖之數據呈現，所以我們要用的頁面設計亦即上述第一個頁面設計的圓餅頁面。以下是我們如何引進圓餅頁面之方法：</p>
+
+<p>ˋˋˋjavascript<br />
+var pie = d3.layout.pie() <br />
+ˋˋˋ</p>
+
+<p>我們也引進D3貼心提供的d3.scale.category()之物件，裡面包括許多顏色以供我們的圓餅圖所使用。我們輸入：</p>
+
+<p>ˋˋˋjavascript <br />
+var colors = d3.scale.category10(); <br />
+ˋˋˋ</p>
+
+<p>來創造colors之物件並將它指向d3.scale.category10()之物件。<br />
+接著，我們又託了D3的福來引進一個稱為d3.svg.arc()之物件。這個物件是非常強大的。它使我們製造圓餅圖的過程簡單只要提供兩個為內弧形半徑innerRadius以及外弧形半徑outerRadius之值，D3自動會提供我們的圓餅圖所需的內弧形和外弧形所需的座標來呈現我們的圖。 </p>
+
+<p>ˋˋˋjavascript <br />
+var arc = d3.svg.arc() <br />
+	.innerRadius(0)<br />
+	.outerRadius(radius - 20); <br />
+ˋˋˋ</p>
+
+<p>就是這麼的簡單！我們引進d3.svg.arc()後，我們分別把內弧形半徑innerRadius和外弧形半徑outerRadius之值設定為零和我們之前定義的radius變數減去20px。</p>
+
+<p>現在我們將正式創造圓餅圖然後把它加入到我們的“布”，亦即我們的svg物件，上。</p>
+
+<p>ˋˋˋjavascript<br />
+var arcs = svg.selectAll(“g.arc”)<br />
+	.data(pie(dataset))<br />
+	.enter() <br />
+	.append(“g”)<br />
+	.attr(“class”, “arc”) <br />
+	.attr(“transform”, “translate(“ + svg_width / 2 + “, “ + svg_height / 2 + “)”); <br />
+ˋˋˋ</p>
+
+<p>之前已有解釋此段程式碼，但是因為D3怪異的“先預先指定物件在創造那些被指定的物件”，這一段程式碼值得我們一再回顧。簡單來說：<br />
+ 1.<br />
+ˋˋˋjavascript<br />
+var arcs = svg.selectAll(“g.arc”)<br />
+ˋˋˋ</p>
+
+<p>我們先指定了我們即將加到svg上的物件，在此為一個稱為”g”的物件中擁有”class”屬性並其值為“arc”的物件，亦即我們圓餅圖所有組成<br />
+圓頂圖的弧形。</p>
+
+<p>”.” javascript之用法：<br />
+	如果您以前有學過HTML和CSS,想必您應該還記得在CSS中指定特定HTML物件的方法吧？在D3中指定物件的方法類似於前者。利用“.”，我們可以取出一個物件中的屬性。在這裡，”g”<br />
+	是我們要進入的物件而”arc”是我們要取出之物件的特徵。所以我們輸入的這一行程式碼：</p>
+
+<p>是利用D3所提供的svg.selectAll方法把在“g”這個物件裡舉有<br />
+”class”為“arc”的物件取出並把arc變數指向這些取出之物件。但是，靈機的你們一定看到端倪吧？我們從頭到尾未曾嚐造過一個稱為”g”之物件。是的，這就至詭異之處。我們所指定的東西不<br />
+從在！這也就是我們在接下來的幾行所要做的事：創造這一些物件！</p>
+
+<p> 2.<br />
+ˋˋˋjavascript<br />
+	.data(pie(dataset))<br />
+		.enter() <br />
+		.append(“g”)<br />
+		.attr(“class”, “arc”) <br />
+ˋˋˋ</p>
+
+<p>在這幾行中有很多事情發生。第一，我們把我們的資料dataset變數傳進pie()這個方法。還記<br />
+得我們之前設定把pie這一個變數指定到d3.layout.pie()嗎？這代表我們傳入的參數dataset<br />
+，其實是被傳入pie所指向的d3.layout.pie()方法。d3.layout.pie()接著會把這些資料<br />
+以圓餅頁面的形式算出複雜的x和y座標以共我們繪製圓餅圖。如果我們可以用Google Chrome<br />
+瀏覽器提供的Inspect Element(在頁面上按下右鍵最後一個選項)之console部分，來查看<br />
+d3.layout.pie()所做的事。</p>
+
+<p><img src="/img/pie_dataset.png" alt="pie_dataset" style="max-height:150px" class="img-thumbnail" /></p>
+
+<p>我們把這一些D3幫我們處理的資料利用.data()方法來把這些數據“綁“在我們即將創造的物件。我們著利用.enter()方法來創造新物件<br />
+（不懂請參考第三章）。我所創造每件物件會附加一個”g”物件以及所有物件的”class”屬性會<br />
+被指定為“arc”之值。</p>
+
+<p>所以，我們現在的arcs變數將是以下所呈現的：</p>
+
+<p><img src="/img/arcs_data.png" alt="arcs_data" style="max-height:150px" class="img-thumbnail" /></p>
+
+<p> 3.<br />
+ˋˋˋjavascript <br />
+	.attr(“transform”, “translate(“ + svg_width / 2 + “,<br />
+		“ + svg_height / 2 + “)”); <br />
+ˋˋˋ</p>
+
+<p>接下來來，我們將來設定我們圓餅圖之中心。因為我們想把圓餅圖顯示於我們svg物件的正中心，<br />
+所以我們將把我們所創造的所有arcs物件從原本預設值（svg元件預設的座標（0, 0)為左上角）<br />
+往-y方向移動 svg_height / 2, svg物件高度之值除以二然後往+x方向移動svg_width / 2,svg物件寬度之值除以二。這樣一來，我們原本創造以座標（0, 0) 為中心的圓餅圖會改而以<br />
+座標（svg_width / 2, svg_height / 2) 為新座標，我們的圓餅圖才會被完全顯示<br />
+在svg物件之上</p>
+
+<p>呼～<br />
+經過這麼多的調整，我們已經把我們想呈現的圓餅圖設下一個良好的基礎。但是，我們並未完成全部的工作。在一下，就可以大功告成了啊！</p>
+
+<p>接下來，有了我們之前所設定的弧形，內弧形半徑，以及外弧形半徑，我們只要加入顏色我們的圖就會顯示。</p>
+
+<p>請輸入：</p>
+
+<p>ˋˋˋjavascript<br />
+	arcs.append(“path”) <br />
+		.attr(“fill”, function(d, i) { <br />
+			return colors(i); <br />
+		})<br />
+		.attr(“d”, arc);<br />
+ˋˋˋ</p>
+
+<p>在這幾行之間，我們看到許多我們之前已經討論過的元件。首先，我們用.append來把一個稱為<br />
+path之物件加在我們的arcs物件上。接著，我們為這個path物件來加上一些屬性。還記得我們<br />
+之前有打上這行程式碼嗎？</p>
+
+<p>ˋˋˋjavascript <br />
+var colors = d3.scale.category10(); <br />
+ˋˋˋ</p>
+
+<p>現在正是我們用上這些我們預先創造的顏色物件！<br />
+我們利用一個無名函示(anonymous function) </p>
+
+<p>ˋˋˋjavascript <br />
+		.attr(“fill”, function(d, i) { <br />
+			return colors(i); <br />
+ˋˋˋ</p>
+
+<p>來將我們數據的索引數值,i,當作一個參數傳入。當這個無名函示接收到i之值，他會傳回由d3.scale.category()方法所傳回的物件，此物件就是用來為我們的圓餅圖上色的顏色。<br />
+接下來，我們又加以設定另一個稱為”d”的屬性。</p>
+
+<p>ˋˋˋjavascript <br />
+		.attr(“d”, arc);<br />
+ˋˋˋ</p>
+
+<p>此屬性是我們剛才創造的顏色物件要涵蓋的區域。我們將這個區域設定成我們之前在</p>
+
+<p>ˋˋˋjavascript <br />
+var arc = d3.svg.arc() <br />
+	.innerRadius(0)<br />
+	.outerRadius(radius - 20); 	<br />
+ˋˋˋ</p>
+
+<p>所設定的“arc”變數。當然我們不知道他實際的值，因為這些值都是由D3提供我們的。這也是為什麼D3如此好用之其中一處。</p>
+
+<p>到這裡如果您有不清楚的地方，請回去再讀一遍。不要擔心，你的努力會被賞賜的！<br />
+如果您瞭解上述所說的全部內容，恭喜！您已經在前往成為D3專家的路上跨出一大步了！</p>
+
+<p>我們再加上一些數字讓讀者知道每一部分的圓餅圖真正的數值為多少。<br />
+請輸入：</p>
+
+<p>ˋˋˋjavascript<br />
+arcs.append(“text”) <br />
+	.attr(“transform”, function(d) {<br />
+		return “translate(“ + arc.centroid(d) + “)”;<br />
+	})<br />
+	.attr(“text-anchor”, “middle”)<br />
+	.text(function(d) { <br />
+		return d.value; <br />
+	});<br />
+ˋˋˋ</p>
+
+<p>我們創造了一個稱為”text”的物件然後把它加到”arcs”物件之上。接著，我們給予這個”text”物件一些屬性。首先，我們給了”transform”屬性:</p>
+
+<p>ˋˋˋjavascript <br />
+.attr(“transform”, function(d) {<br />
+		return “translate(“ + arc.centroid(d) + “)”;<br />
+	})<br />
+ˋˋˋ</p>
+
+<p>我們把數據當成一個無名函示的參數。該函示傳回的值是經過arc.centroid()之方法後的結果<br />
+，亦即D3幫我們計算的(x,y)座標位於arc的正中心。接著我們加上”middle”為“text-anchor”屬性的值。最後，我們把要顯示的文字用”text”屬性來設定。其值設定為一個無名函示所傳回的值，亦即我們數據各項之值。</p>
+
+<p>如果我們想把我們圓餅圖變成一個”甜甜圈圖“，別擔心！因為，我們只需要更改一行程式碼！</p>
+
+<p>把：<br />
+ˋˋˋjavascript <br />
+.innerRadius(0)<br />
+ˋˋˋ</p>
+
+<p>ˋˋˋjavascript <br />
+.innerRadius(radius - 70)<br />
+ˋˋˋ</p>
+
+<p>即可取得我們想要的甜甜圈圖！注意，我們之前所設的所有文字都自動更改到我們心弧形的中心！<br />
+真的是非常，非常方便！第二張在此告一個段落，如果您對D3的強大功能深深被吸引，那麼相信您一定在未來幾章會更有收穫喔！</p>
+
+
+  </article>
+
+</div>
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <!-- <h2 class="footer-heading">D3.js 中文實戰教學</h2> -->
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col  footer-col-1">
+        <ul class="contact-list">
+          <li>D3.js 中文實戰教學</li>
+          <li><a href="mailto:kevinjipotw@gmail.com">kevinjipotw@gmail.com</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col  footer-col-2">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/kevinchipotw">
+              <span class="icon  icon--github">
+                <svg viewBox="0 0 16 16">
+                  <path fill="#828282" d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761 c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32 c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472 c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037 C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65 c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261 c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082 c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129 c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z"/>
+                </svg>
+              </span>
+
+              <span class="username">kevinchipotw</span>
+            </a>
+          </li>
+          
+
+          
+        </ul>
+      </div>
+
+      <div class="footer-col  footer-col-3">
+        &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+        <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a>
+
+
+        <!-- <p class="text"></p> -->
+      </div>
+    </div>
+
+  </div>
+
+
+</footer>
+
+
+  </body>
+
+</html>
+
+
+
+
+

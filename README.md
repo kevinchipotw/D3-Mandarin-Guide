@@ -24,7 +24,7 @@ D3中文實戰教學手冊為開放原始碼(Open Source)，任何人都可以co
 如果你想貢獻或有任何建議或想法，歡迎用github fork and send pull request。  
 或Email我。  
 
-Collaborators:  
+Collaborators:
 <a href="https://github.com/kevinchipotw" target="_blank">kevinchipotw</a>  
 <a href="https://github.com/CodeInSleep" target="_blank">CodeInSleep</a>   
 Email: kevinjipotw@gmail.com

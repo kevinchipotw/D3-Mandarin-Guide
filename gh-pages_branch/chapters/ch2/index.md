@@ -100,6 +100,11 @@ http://localhost:8000/
 
 如果不是的話，那請你先把第二章再讀一次。  
 前置完成之後，接下來我們就要來累積一些實戰經驗了！Let's GO！
+<br><br>
+
+<iframe width="420" height="250"
+src="http://www.youtube.com/embed/k2jMVXaPLQs">
+</iframe>
 
 ***
 

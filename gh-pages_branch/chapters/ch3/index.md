@@ -8,6 +8,9 @@ permalink: /ch3/
   <span style = "float: left">
     <a href = "/ch2/">第二章 - 前置作業</a>
   </span>
+  <span style = "float: right">
+    <a href = "/ch4/">第四章 - 圓餅圖</a>
+  </span>
 
 </div>
 <br>
@@ -551,6 +554,9 @@ svg.selectAll("text")
 <div>
   <span style = "float: left">
     <a href = "/ch2/">第二章 - 前置作業</a>
+  </span>
+  <span style = "float: right">
+    <a href = "/ch4/">第四章 - 圓餅圖</a>
   </span>
 
 </div>

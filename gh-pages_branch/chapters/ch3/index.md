@@ -546,7 +546,11 @@ svg.selectAll("text")
 我們完成了簡易的長條圖！
 如果有任何不懂的地方，建議把本章多看幾次。因為本章所使用的都是D3基本技巧，如果現在沒弄懂，以後只會越來愈複雜。
 
+<iframe width="420" height="250"
+src="http://www.youtube.com/embed/W7pOJjy1qwI">
+</iframe>
 
+<br>
 <a href="/chapters/ch3/code/index.html" download="index"><span class = "btn btn-success">下載長條圖成品</span></a>
 
 ***

@@ -123,7 +123,7 @@ index.html的code應如下:</p>
 </code></pre>
 </div>
 
-<p>經過章節三介紹的長條圖，我們講來探討一樣非常普遍的圓餅圖。這啷裡所用到的技巧非常類似第三章裡所介紹的基本技巧，讓我們來開始吧！</p>
+<p>經過章節三介紹的長條圖，我們講來探討一樣非常普遍的圓餅圖。這裡所用到的技巧非常類似第三章裡所介紹的基本技巧，讓我們來開始吧！</p>
 
 <p>記得我們所有的程式碼都必須被script tag所圍起來。這樣一來，電腦就會認知這些程式碼為 javascript 程式碼。</p>
 
@@ -143,14 +143,14 @@ index.html的code應如下:</p>
 </code></pre>
 </div>
 
-<p>radius變數指向一個數值物件。這個數值物件利用javascript之中Math.min()之方法來取得svg_width和svg_height兩數之中的較低數來處以二。<br />
+<p>radius 變數指向一個數值物件。這個數值物件利用javascript之中Math.min()之方法來取得svg_width 和 svg_height兩數之中的較低數來處以二。<br />
 我們將利用之前用過的好用數據：</p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">dataset</span> <span class="o">=</span> <span class="p">[</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">45</span> <span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">35</span> <span class="p">,</span> <span class="mi">18</span><span class="p">];</span>
 </code></pre>
 </div>
 
-<p>不過目前為止，我們還未真正的建立我們後會用到的svg元件，我們目前為只只有創造了三個便數。還記得javascript這個語言是一種物件導向之程式設計語言，所以我們在此所做的事創造了三個物件，一個稱為svg_width之物件指向500之數值，另一個稱為svg_height之物件指向200之數職，而最後一稱為dataset之物件指向一個陣列為[ 30, 20, 10, 40, 45 , 25, 15, 35 , 18]。</p>
+<p>不過目前為止，我們還未真正的建立我們後會用到的svg元件，我們目前為只有創造了三個便數。還記得javascript這個語言是一種物件導向之程式設計語言，所以我們在此所做的事創造了三個物件，一個稱為svg_width之物件指向500之數值，另一個稱為svg_height之物件指向200之數值，而最後一稱為dataset之物件指向一個陣列為 [ 30, 20, 10, 40, 45 , 25, 15, 35 , 18]。</p>
 
 <p>有了這個物件導向之程式設計觀，我們接下來會來創造我們討論許久的svg元件。如以下我們所做的：</p>
 
@@ -173,7 +173,7 @@ index.html的code應如下:</p>
 </code></pre>
 </div>
 
-<p>來創造一個稱為svg之物件然後將此附加到我我們前一行所指定的body物件。這個svg變數存在的目的是為了提供我們“一塊布”讓我們能夠把想要呈現的物件加入並加以呈現。接著，我們利用.attr為這個svg物件設定它的高和寬屬性，在第一個參數中我們指定我們要改變之屬性接著在第二個參數我們把我們想設定的值輸入來。在此，我們用之前所創造的svg_width和svg_height之變數來設定svg物件之屬性。</p>
+<p>來創造一個稱為svg之物件然後將此附加到我我們前一行所指定的body物件。這個svg變數存在的目的是為了提供我們“一塊布”讓我們能夠把想要呈現的物件加入並加以呈現。接著，我們利用 .attr 為這個svg物件設定它的高和寬屬性，在第一個參數中我們指定我們要改變之屬性接著在第二個參數我們把我們想設定的值輸入來。在此，我們用之前所創造的svg_width和svg_height之變數來設定svg物件之屬性。</p>
 
 <p>接著我們輸入：</p>
 
@@ -223,9 +223,9 @@ index.html的code應如下:</p>
 </code></pre>
 </div>
 
-<p>就是這麼的簡單！我們引進d3.svg.arc()後，我們分別把內弧形半徑innerRadius和外弧形半徑outerRadius之值設定為零和我們之前定義的radius變數減去20px。</p>
+<p>就是這麼的簡單！我們引進d3.svg.arc()後，我們分別把內弧形半徑innerRadius和外弧形半徑outerRadius之值設定為零和我們之前定義的radius變數減去 20px。</p>
 
-<p>現在我們將正式創造圓餅圖然後把它加入到我們的“布”，亦即我們的svg物件，上。</p>
+<p>現在我們將正式創造圓餅圖然後把它加入到我們的“布”，亦即我們的svg物件上。</p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">arcs</span> <span class="o">=</span> <span class="nx">svg</span><span class="p">.</span><span class="nx">selectAll</span><span class="p">(</span><span class="s2">"g.arc"</span><span class="p">)</span>
 	<span class="p">.</span><span class="nx">data</span><span class="p">(</span><span class="nx">pie</span><span class="p">(</span><span class="nx">dataset</span><span class="p">))</span>
@@ -242,16 +242,13 @@ index.html的code應如下:</p>
 </code></pre>
 </div>
 
-<p>我們先指定了我們即將加到svg上的物件，在此為一個稱為”g”的物件中擁有”class”屬性並其值為“arc”的物件，亦即我們圓餅圖所有組成<br />
-圓頂圖的弧形。</p>
+<p>我們先指定了我們即將加到svg上的物件，在此為一個稱為”g”的物件中擁有”class”屬性並其值為“arc”的物件，亦即我們圓餅圖所有組成圓頂圖的弧形。</p>
 
 <p>”.” javascript之用法：<br />
 	如果您以前有學過HTML和CSS,想必您應該還記得在CSS中指定特定HTML物件的方法吧？在D3中指定物件的方法類似於前者。利用“.”，我們可以取出一個物件中的屬性。在這裡，”g”<br />
 	是我們要進入的物件而”arc”是我們要取出之物件的特徵。所以我們輸入的這一行程式碼：</p>
 
-<p>是利用D3所提供的svg.selectAll方法把在“g”這個物件裡舉有<br />
-”class”為“arc”的物件取出並把arc變數指向這些取出之物件。但是，靈機的你們一定看到端倪吧？我們從頭到尾未曾嚐造過一個稱為”g”之物件。是的，這就至詭異之處。我們所指定的東西不<br />
-從在！這也就是我們在接下來的幾行所要做的事：創造這一些物件！</p>
+<p>是利用 D3 所提供的 svg.selectAll 方法把在“g”這個物件裡有 ”class” 為 “arc” 的物件取出並把arc變數指向這些取出之物件。但是，靈機的你們一定看到端倪吧？我們從頭到尾未曾嚐造過一個稱為”g”之物件。是的，這就至詭異之處。我們所指定的東西不存在！這也就是我們在接下來的幾行所要做的事：創造這一些物件！</p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code><span class="p">.</span><span class="nx">data</span><span class="p">(</span><span class="nx">pie</span><span class="p">(</span><span class="nx">dataset</span><span class="p">))</span>
 	<span class="p">.</span><span class="nx">enter</span><span class="p">()</span> 
@@ -260,18 +257,17 @@ index.html的code應如下:</p>
 </code></pre>
 </div>
 
-<p>在這幾行中有很多事情發生。第一，我們把我們的資料dataset變數傳進pie()這個方法。還記<br />
+<p>在這幾行中有很多事情發生。第一，我們把我們的資料 dataset 變數傳進pie()這個方法。還記<br />
 得我們之前設定把pie這一個變數指定到d3.layout.pie()嗎？這代表我們傳入的參數dataset<br />
-，其實是被傳入pie所指向的d3.layout.pie()方法。d3.layout.pie()接著會把這些資料<br />
-以圓餅頁面的形式算出複雜的x和y座標以共我們繪製圓餅圖。如果我們可以用Google Chrome<br />
-瀏覽器提供的Inspect Element(在頁面上按下右鍵最後一個選項)之console部分，來查看<br />
-d3.layout.pie()所做的事。</p>
+，其實是被傳入pie所指向的d3.layout.pie()方法。</p>
+
+<p>d3.layout.pie()接著會把這些資料以圓餅頁面的形式算出複雜的x和y座標以共我們繪製圓餅圖。<br />
+如果我們可以用Google Chrome 瀏覽器提供的 Inspect Element(在頁面上按下右鍵最後一個選項)之console部分，來查看 d3.layout.pie() 所做的事。</p>
 
 <p><img src="/chapters/ch4/img/pie_dataset.png" alt="pie_dataset" style="max-height:150px" class="img-thumbnail" /></p>
 
-<p>我們把這一些D3幫我們處理的資料利用.data()方法來把這些數據“綁“在我們即將創造的物件。我們著利用.enter()方法來創造新物件<br />
-（不懂請參考第三章）。我所創造每件物件會附加一個”g”物件以及所有物件的”class”屬性會<br />
-被指定為“arc”之值。</p>
+<p>我們把這一些D3幫我們處理的資料利用.data()方法來把這些數據“綁“在我們即將創造的物件。我們著利用.enter()方法來創造新物件 (不懂請參考第三章)。<br />
+我所創造每件物件會附加一個”g”物件以及所有物件的”class”屬性會被指定為“arc”之值。</p>
 
 <p>所以，我們現在的arcs變數將是以下所呈現的：</p>
 
@@ -282,11 +278,11 @@ d3.layout.pie()所做的事。</p>
 </code></pre>
 </div>
 
-<p>接下來來，我們將來設定我們圓餅圖之中心。因為我們想把圓餅圖顯示於我們svg物件的正中心，<br />
-所以我們將把我們所創造的所有arcs物件從原本預設值（svg元件預設的座標（0, 0)為左上角）<br />
-往-y方向移動 svg_height / 2, svg物件高度之值除以二然後往+x方向移動svg_width / 2,svg物件寬度之值除以二。這樣一來，我們原本創造以座標（0, 0) 為中心的圓餅圖會改而以<br />
-座標（svg_width / 2, svg_height / 2) 為新座標，我們的圓餅圖才會被完全顯示<br />
-在svg物件之上</p>
+<p>接下來，我們將來設定我們圓餅圖之中心。  </p>
+
+<p>因為我們想把圓餅圖顯示於我們svg物件的正中心，所以我們將把我們所創造的所有arcs物件從原本預設值（svg元件預設的座標（0, 0)為左上角）往-y方向移動 svg_height / 2, svg物件高度之值除以二然後往+x方向移動svg_width / 2,svg物件寬度之值除以二。</p>
+
+<p>這樣一來，我們原本創造以座標（0, 0) 為中心的圓餅圖會改而以座標（svg_width / 2, svg_height / 2) 為新座標，我們的圓餅圖才會被完全顯示在svg物件之上。</p>
 
 <p>呼～<br />
 經過這麼多的調整，我們已經把我們想呈現的圓餅圖設下一個良好的基礎。但是，我們並未完成全部的工作。在一下，就可以大功告成了啊！</p>
@@ -303,8 +299,8 @@ d3.layout.pie()所做的事。</p>
 </code></pre>
 </div>
 
-<p>在這幾行之間，我們看到許多我們之前已經討論過的元件。首先，我們用.append來把一個稱為<br />
-path之物件加在我們的arcs物件上。接著，我們為這個path物件來加上一些屬性。還記得我們<br />
+<p>在這幾行之間，我們看到許多我們之前已經討論過的元件。首先，我們用 .append 來把一個稱為<br />
+path之物件加在我們的 arcs 物件上。接著，我們為這個path物件來加上一些屬性。還記得我們<br />
 之前有打上這行程式碼嗎？</p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">colors</span> <span class="o">=</span> <span class="nx">d3</span><span class="p">.</span><span class="nx">scale</span><span class="p">.</span><span class="nx">category10</span><span class="p">();</span> 
@@ -312,14 +308,14 @@ path之物件加在我們的arcs物件上。接著，我們為這個path物件�
 </div>
 
 <p>現在正是我們用上這些我們預先創造的顏色物件！<br />
-我們利用一個無名函示(anonymous function) </p>
+我們利用一個無名函數 (anonymous function) 來將我們數據的索引數值,i,當作一個參數傳入。</p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code><span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s2">"fill"</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">,</span> <span class="nx">i</span><span class="p">)</span> <span class="p">{</span> 
 	<span class="k">return</span> <span class="nx">colors</span><span class="p">(</span><span class="nx">i</span><span class="p">);</span> 
 </code></pre>
 </div>
 
-<p>來將我們數據的索引數值,i,當作一個參數傳入。當這個無名函示接收到i之值，他會傳回由d3.scale.category()方法所傳回的物件，此物件就是用來為我們的圓餅圖上色的顏色。<br />
+<p>當這個無名函數接收到i之值，他會傳回由d3.scale.category()方法所傳回的物件，此物件就是用來為我們的圓餅圖上色的顏色。<br />
 接下來，我們又加以設定另一個稱為”d”的屬性。</p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code><span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s2">"d"</span><span class="p">,</span> <span class="nx">arc</span><span class="p">);</span>
@@ -379,7 +375,7 @@ path之物件加在我們的arcs物件上。接著，我們為這個path物件�
 </div>
 
 <p>即可取得我們想要的甜甜圈圖！注意，我們之前所設的所有文字都自動更改到我們心弧形的中心！<br />
-真的是非常，非常方便！第二張在此告一個段落，如果您對D3的強大功能深深被吸引，那麼相信您一定在未來幾章會更有收穫喔！</p>
+真的是非常，非常方便！第四章在此告一個段落，如果您對D3的強大功能深深被吸引，那麼相信您一定在未來幾章會更有收穫喔！</p>
 
 <p><br /></p>
 

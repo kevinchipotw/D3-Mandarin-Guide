@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html>
+
+  
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>第三章 - 長條圖</title>
+  <meta name="description" content="">
+
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="canonical" href="http://yourdomain.com/ch3/">
+  <link rel="alternate" type="application/rss+xml" title="D3.js 中文實戰教學" href="http://yourdomain.com/feed.xml" />
+
+  <!-- jquery -->
+  <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+
+  <!-- bootstrap -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+
+  <!-- custom css -->
+  <link rel="stylesheet" type="text/css" href="http://d3mandaringuide.com/css/custom_general.css">
+
+
+  <!-- GA -->
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-64535837-1', 'auto');
+  ga('send', 'pageview');
+
+  </script>
+
+
+</head>
+
+
+
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/">D3.js 中文實戰教學</a>
+
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      <div class="trigger">
+        <a class = "page-link" href = "/about/">關於這本書</a>
+        <a class = "page-link" href = "/collaborate/">關於合作</a>
+
+
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <div class="post">
+
+  <header class="post-header">
+    <h2>第三章 - 長條圖</h2>
+  </header>
+
+  <article class="post-content">
+    <div>
+  <span style="float: left">
+    <a href="/ch2/">第二章 - 前置作業</a>
+  </span>
+  <span style="float: right">
+    <a href="/ch4/">第四章 - 圓餅圖</a>
+  </span>
+
+</div>
+<p><br /></p>
+
+<hr />
+
+<h4 id="section">成品圖:</h4>
+
+<p><img src="/chapters/ch3/img/product.png" alt="..." style="max-height:300px" class="img-thumbnail" /></p>
+
+<p><a href="/chapters/ch3/code/index.html" download="index"><span class="btn btn-success">下載長條圖成品</span></a></p>
+
+<hr />
+
+<h4 id="section-1">製作步驟:</h4>
+<p>首先照第二章的前置作業先將開一個local server執行index.html (不會的話請先詳閱第二章)<br />
+index.html的code應如下:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+  <span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"UTF-8"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;script </span><span class="na">src =</span><span class="s">"http://d3js.org/d3.v3.min.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+  <span class="nt">&lt;/head&gt;</span>
+  <span class="nt">&lt;body&gt;</span>
+  	<span class="nt">&lt;h1&gt;</span>我的第一個D3<span class="nt">&lt;/h1&gt;</span>
+
+  <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre>
+</div>
+
+<p>之後再body標籤中輸入script標籤，讓html檔知道你輸入的code為js code。<br />
+像這樣:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="nt">&lt;body&gt;</span>
+  <span class="nt">&lt;h1&gt;</span>我的第一個D3<span class="nt">&lt;/h1&gt;</span>
+  <span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span><span class="nt">&gt;</span>
+
+  <span class="nt">&lt;/script&gt;</span>
+
+<span class="nt">&lt;/body&gt;</span>
+</code></pre>
+</div>
+
+<p>現在我們就要開始做D3的編程了！<br />
+<strong>以下的程式碼務必打在上面的script tag裡。</strong><br />
+像這樣:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span><span class="nt">&gt;</span>
+	<span class="c1">// 以下的code...</span>
+<span class="nt">&lt;/script&gt;</span>
+</code></pre>
+</div>
+<p>懂了嗎? 這個指示很重要。</p>
+
+<p>首先我們要先設定svg的性質，因為我們要在svg上呈現我們的資料圖形。<br />
+可以將svg想成一塊布，當你要畫在一塊布上面的時候，是否先決定布的大小? D3同理。<br />
+所以接下來我們所輸入的code你將不會在瀏覽器上看到圖形，因為我們要先訂出我們的白布的尺寸。<br />
+(因為是白色的所以看不到…)<br />
+GO!</p>
+
+<p>先宣布兩個數值: </p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">svg_width</span> <span class="o">=</span> <span class="mi">500</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">svg_height</span><span class="o">=</span> <span class="mi">200</span><span class="p">;</span>
+</code></pre>
+</div>
+<p>svg_width = svg寬度<br />
+svg_heigh = svg長度<br />
+這兩個值是我們之後要用來設定svg(布)的長寬用的。<br />
+<strong>但目前只是訂出了大小，但還設定svg！</strong><br />
+之後加上:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">dataset</span> <span class="o">=</span> <span class="p">[</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">45</span> <span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">35</span> <span class="p">,</span> <span class="mi">18</span><span class="p">];</span>
+</code></pre>
+</div>
+<p>這是我們要視覺化的data。<br />
+這邊先稍微講解一下這個data的結構，dataset的結構為array。<br />
+因此我們如果要取得裡面的一個值，可以用 <em>dataset[i]</em>。<br />
+i 為元素指數(數字)。<br />
+EX: 如果我要取得dataset中 ‘10’ 這個值。<br />
+可以用 <em>dataset[2]</em>。<br />
+這個如果不懂的話，先去看看一些Javascript data結構的書再繼續讀。<br />
+這邊不做過多解釋。</p>
+
+<p>在輸入完dataset之後，我們要用我們之前訂出的大小來<strong>設定svg了</strong>。<br />
+輸入:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">svg</span> <span class="o">=</span> <span class="nx">d3</span><span class="p">.</span><span class="nx">select</span><span class="p">(</span><span class="s2">"body"</span><span class="p">)</span>
+	<span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="s2">"svg"</span><span class="p">)</span>
+	<span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s2">"width"</span><span class="p">,</span> <span class="nx">svg_width</span><span class="p">)</span>
+	<span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s2">"height"</span><span class="p">,</span> <span class="nx">svg_height</span><span class="p">);</span>
+</code></pre>
+</div>
+<p>看不懂嗎? 沒關係，這就是為什麼你要看這本實戰手冊。<br />
+首先，可以先看等號的右邊的編程。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="nx">d3</span><span class="p">.</span><span class="nx">select</span><span class="p">(</span><span class="s2">"body"</span><span class="p">)</span>
+</code></pre>
+</div>
+<p>這行code是我們在跟D3說我要把元素加在body標籤中。<br />
+記得這個嗎?</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+  <span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"UTF-8"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;script </span><span class="na">src =</span><span class="s">"http://d3js.org/d3.v3.min.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+  <span class="nt">&lt;/head&gt;</span>
+  <span class="nt">&lt;body&gt;</span>
+  	<span class="nt">&lt;h1&gt;</span>我的第一個D3<span class="nt">&lt;/h1&gt;</span>
+
+  <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre>
+</div>
+<p>我們在跟D3說我們要把元素加在&lt;body&gt;跟&lt;/body&gt;之間。<br />
+我們要加什麼東西呢？</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="nx">d3</span><span class="p">.</span><span class="nx">select</span><span class="p">(</span><span class="s2">"body"</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="s2">"svg"</span><span class="p">)</span>
+</code></pre>
+</div>
+<p>加svg，append的中文就是加上的意思。<br />
+所以append(“svg”)就是說我要在body標籤中加上svg元素。<br />
+Easy~<br />
+接下來:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="nx">d3</span><span class="p">.</span><span class="nx">select</span><span class="p">(</span><span class="s2">"body"</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="s2">"svg"</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s2">"width"</span><span class="p">,</span> <span class="nx">svg_width</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s2">"height"</span><span class="p">,</span> <span class="nx">svg_height</span><span class="p">);</span>
+</code></pre>
+</div>
+<p>這兩行attr程式碼，就是我們在跟D3說svg的大小。<br />
+前面我們不是有設定svg_width 跟 svg_height？</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">svg_width</span> <span class="o">=</span> <span class="mi">500</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">svg_height</span><span class="o">=</span> <span class="mi">200</span><span class="p">;</span>
+</code></pre>
+</div>
+<p>現在這兩行attr就是在用那兩個數值來設定svg的長寬。</p>
+
+<p>現在我們的code有:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span><span class="nt">&gt;</span>
+  <span class="kd">var</span> <span class="nx">svg_width</span> <span class="o">=</span> <span class="mi">500</span><span class="p">;</span>
+  <span class="kd">var</span> <span class="nx">svg_height</span> <span class="o">=</span> <span class="mi">200</span><span class="p">;</span>
+
+  <span class="kd">var</span> <span class="nx">dataset</span> <span class="o">=</span> <span class="p">[</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">45</span> <span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">35</span> <span class="p">,</span> <span class="mi">18</span><span class="p">];</span>
+
+  <span class="kd">var</span> <span class="nx">svg</span> <span class="o">=</span> <span class="nx">d3</span><span class="p">.</span><span class="nx">select</span><span class="p">(</span><span class="s2">"body"</span><span class="p">)</span>
+        <span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="s2">"svg"</span><span class="p">)</span>
+        <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s2">"width"</span><span class="p">,</span> <span class="nx">svg_width</span><span class="p">)</span>
+        <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s2">"height"</span><span class="p">,</span> <span class="nx">svg_height</span><span class="p">);</span>
+
+<span class="nt">&lt;/script&gt;</span>
+</code></pre>
+</div>
+<p>現在我們已經在我們的html文件中有一個寬500px * 長200px的svg元素和我們要呈現的data array。</p>
+
+<p>OK，先深呼吸。因為接下為重頭戲。<br />
+現在我們必須把data呈現/畫到我們所設定的svg上。<br />
+怎麼做呢？<br />
+輸入: </p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="nx">svg</span><span class="p">.</span><span class="nx">selectAll</span><span class="p">(</span><span class="s2">"rect"</span><span class="p">)</span>
+         <span class="p">.</span><span class="nx">data</span><span class="p">(</span><span class="nx">dataset</span><span class="p">)</span>
+         <span class="p">.</span><span class="nx">enter</span><span class="p">()</span>
+         <span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="s2">"rect"</span><span class="p">)</span>
+</code></pre>
+</div>
+<p>許多人都認為這是D3最難懂的地方，不過其實理解後道理其實很簡單。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="nx">svg</span><span class="p">.</span><span class="nx">selectAll</span><span class="p">(</span><span class="s2">"rect"</span><span class="p">)</span>
+</code></pre>
+</div>
+<p>這行code先select(選擇)了我們html文件中的 “rect” 元素。<br />
+也許你會說我們在文件上並沒有任何 “rect” 元素，那D3要如和選擇那些元素呢？<br />
+其實D3在這個地方所做的是一個empty selection。也就是說他沒有選擇任何元素。<br />
+D3選擇的是你未來要加入到html文件中的元素。<br />
+先繼續看下去。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">.</span><span class="nx">data</span><span class="p">(</span><span class="nx">dataset</span><span class="p">)</span>
+</code></pre>
+</div>
+<p>這行是說，我們要用的data是我們已經宣告的dataset array</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">.</span><span class="nx">enter</span><span class="p">()</span>
+</code></pre>
+</div>
+<p><em>.enter()</em> 是一個比較特殊的語法。<br />
+可以把它想成一個過濾網，過濾掉data值。<br />
+那他是要過濾掉什麼data值呢？<br />
+<em>.enter()</em> 會過濾掉html上已經有 “rect” (我們的empty selection) 元素代表的data值。<br />
+因為dataset中的data值都沒有 “rect” 這個元素代表。所以所有在dataset中的data值都不會被排除/過濾。<br />
+而通過.enter所過濾的所有值都會執行.enter()以下的指令。<br />
+所以以我們的dataset來講:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">dataset</span> <span class="o">=</span> <span class="p">[</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">45</span> <span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">35</span> <span class="p">,</span> <span class="mi">18</span><span class="p">];</span>
+</code></pre>
+</div>
+<p>因為所有的值(30, 20, 10, …)，總共9個data值都沒有被過濾掉。<br />
+所以 <em>.enter()</em> 以下的指令都會被執行9次，每次使用一個dataset裡面的一個值。</p>
+
+<p><br /></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="s2">"rect"</span><span class="p">)</span>
+</code></pre>
+</div>
+<p>這句比較好懂，簡單的說，就是把所有經過.enter()過濾的data綁上”rect”這個元素。<br />
+現在我們所有在dataset裡的值都已經有了元素代表 “rect”。 <br />
+所以如果我們之後再用 <em>.enter()</em> 的話， <em>.enter()</em> 就會過濾掉我們所有dataset。<br />
+懂了嗎？</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="nx">svg</span><span class="p">.</span><span class="nx">selectAll</span><span class="p">(</span><span class="s2">"rect"</span><span class="p">)</span>
+         <span class="p">.</span><span class="nx">data</span><span class="p">(</span><span class="nx">dataset</span><span class="p">)</span>
+         <span class="p">.</span><span class="nx">enter</span><span class="p">()</span>
+         <span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="s2">"rect"</span><span class="p">)</span>
+</code></pre>
+</div>
+<p>所以這四句簡單來說就是:<br />
+ 1.先選擇我們<strong>未來</strong>要加到html檔上的”rect”<br />
+ 2.跟D3說我們要用的data是我們已經宣告的dataset array<br />
+ 3.過濾掉已經有元素代表的data值，然後用沒被過濾掉的data值執行以下指令。因為我們的dataset還沒有任何元素代表所以不會被過濾掉。<br />
+ 4.將我們所有dataset裏的值都綁上”rect”這個元素。</p>
+
+<p>不懂的話，建議把這頁多看幾遍。因為這是D3重要的技巧。</p>
+
+<p>確定弄懂之後繼續加入:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="nx">svg</span><span class="p">.</span><span class="nx">selectAll</span><span class="p">(</span><span class="s2">"rect"</span><span class="p">)</span>
+         <span class="p">.</span><span class="nx">data</span><span class="p">(</span><span class="nx">dataset</span><span class="p">)</span>
+         <span class="p">.</span><span class="nx">enter</span><span class="p">()</span>
+         <span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="s2">"rect"</span><span class="p">)</span>
+         <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s2">"x"</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">,</span> <span class="nx">i</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="nx">i</span> <span class="o">*</span> <span class="p">(</span><span class="nx">svg_width</span> <span class="o">/</span> <span class="nx">dataset</span><span class="p">.</span><span class="nx">length</span><span class="p">);</span>
+         <span class="p">})</span>
+         <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s2">"y"</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="nx">svg_height</span> <span class="o">-</span> <span class="p">(</span><span class="nx">d</span> <span class="o">*</span> <span class="mi">4</span><span class="p">);</span>
+         <span class="p">})</span>
+</code></pre>
+</div>
+<p>記得我們上面說 <em>enter()</em> 過濾之後的data值都會被執行9次嗎？ (dataset裡共9個data值)<br />
+而且每次執行時候會運用一個dataset裡面的值。<br />
+所以簡單來說，dataset裏的每一個值都會執行:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s2">"x"</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">,</span> <span class="nx">i</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="nx">i</span> <span class="o">*</span> <span class="p">(</span><span class="nx">svg_width</span> <span class="o">/</span> <span class="nx">dataset</span><span class="p">.</span><span class="nx">length</span><span class="p">);</span>
+<span class="p">})</span>
+<span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s2">"y"</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="nx">svg_height</span> <span class="o">-</span> <span class="p">(</span><span class="nx">d</span> <span class="o">*</span> <span class="mi">4</span><span class="p">);</span>
+<span class="p">})</span>
+</code></pre>
+</div>
+<p>OK，那attr(attribute屬性) “x” 跟 “y” 又是什麼呢？<br />
+答案是x跟y的座標，也就是說每個data值綁上的長方形的座標。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">dataset</span> <span class="o">=</span> <span class="p">[</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">45</span> <span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">35</span> <span class="p">,</span> <span class="mi">18</span><span class="p">];</span>
+</code></pre>
+</div>
+<p>我們現在在設定每個data值的長方形的座標。<br />
+先假設我們現在在跑data值 30(dataset中的第一個)。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s2">"x"</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">,</span> <span class="nx">i</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="nx">i</span> <span class="o">*</span> <span class="p">(</span><span class="nx">svg_width</span> <span class="o">/</span> <span class="nx">dataset</span><span class="p">.</span><span class="nx">length</span><span class="p">);</span>
+<span class="p">})</span>
+</code></pre>
+</div>
+<p>執行值30的時候會變成:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s2">"x"</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="mi">0</span> <span class="o">*</span> <span class="p">(</span><span class="mi">500</span> <span class="o">/</span> <span class="mi">9</span><span class="p">);</span>
+<span class="p">})</span>
+</code></pre>
+</div>
+<p>代數(variable)的變化為:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="nx">d</span> <span class="o">=</span> <span class="mi">30</span>
+<span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="nx">svg_width</span> <span class="o">=</span> <span class="mi">500</span>
+<span class="nx">dataset</span><span class="p">.</span><span class="nx">length</span> <span class="o">=</span> <span class="mi">9</span>
+</code></pre>
+</div>
+<p>因為d代表著被執行的data值，也就是30。<br />
+i 代表著dataset array 的元素指數。因為30是array第一個，所以是 0。<br />
+svg_width 跟 dataset.length 應該就不用再解釋了。</p>
+
+<p>所以，當我們跑30這個值的時候，這個值的長方形的x座標會是 0。 <br />
+0 * (500 / 9) = 0</p>
+
+<p>屬性(attribute) y 也是同樣道理。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s2">"y"</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="nx">svg_height</span> <span class="o">-</span> <span class="p">(</span><span class="nx">d</span> <span class="o">*</span> <span class="mi">4</span><span class="p">);</span>
+<span class="p">})</span>
+</code></pre>
+</div>
+<p>執行值30的時候會變成:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s2">"y"</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="mi">30</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="nx">svg_height</span> <span class="o">-</span> <span class="p">(</span><span class="mi">30</span> <span class="o">*</span> <span class="mi">4</span><span class="p">);</span>
+<span class="p">})</span>
+</code></pre>
+</div>
+<p>svg_height 是200，所以 y = 200 -120 = 80。<br />
+這裏要先解釋一下D3對height的理解有點不一樣。</p>
+
+<p><img src="/chapters/ch3/img/height.png" alt="..." style="max-height:150px" class="img-thumbnail" /></p>
+
+<p>D3對height(高度)的理解是最頂端為 0，依圖所示。<br />
+Height越高代表離svg上方界線越遠。<br />
+Width(寬度)則是和常理相同。</p>
+
+<p>總和言之，我們值 30 所綁上的長方形(rect)會出現在svg上的座標(0, 80)。<br />
+而dataset裏的每個值都會執行一樣的指令來設定每個值的長方形座標。</p>
+
+<p>呼～ 喘口氣，關關難過關關過。</p>
+
+<p>接下來輸入:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="nx">svg</span><span class="p">.</span><span class="nx">selectAll</span><span class="p">(</span><span class="s2">"rect"</span><span class="p">)</span>
+         <span class="p">.</span><span class="nx">data</span><span class="p">(</span><span class="nx">dataset</span><span class="p">)</span>
+         <span class="p">.</span><span class="nx">enter</span><span class="p">()</span>
+         <span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="s2">"rect"</span><span class="p">)</span>
+         <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s2">"x"</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">,</span> <span class="nx">i</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="nx">i</span> <span class="o">*</span> <span class="p">(</span><span class="nx">svg_width</span> <span class="o">/</span> <span class="nx">dataset</span><span class="p">.</span><span class="nx">length</span><span class="p">);</span>
+         <span class="p">})</span>
+         <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s2">"y"</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="nx">svg_height</span> <span class="o">-</span> <span class="p">(</span><span class="nx">d</span> <span class="o">*</span> <span class="mi">4</span><span class="p">);</span>
+         <span class="p">})</span>
+         <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s2">"width"</span><span class="p">,</span> <span class="nx">svg_width</span> <span class="o">/</span> <span class="nx">dataset</span><span class="p">.</span><span class="nx">length</span><span class="p">)</span>
+         <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s2">"height"</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="nx">d</span> <span class="o">*</span> <span class="mi">4</span><span class="p">;</span>
+         <span class="p">})</span>
+</code></pre>
+</div>
+<p>主要是這兩個新的code:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s2">"width"</span><span class="p">,</span> <span class="nx">svg_width</span> <span class="o">/</span> <span class="nx">dataset</span><span class="p">.</span><span class="nx">length</span><span class="p">)</span>
+<span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s2">"height"</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="nx">d</span> <span class="o">*</span> <span class="mi">4</span><span class="p">;</span>
+<span class="p">})</span>
+</code></pre>
+</div>
+<p>設定完每個值的長方形的座標之後，我們必須要設定他們的大小。<br />
+這兩個屬性其實非常好懂，顧名思義就是長方形的長寬。<br />
+Width = 寬，Height = 長。<br />
+也就是說，我們的每個值的長方形都是 500/9 = 55.55 px (畫素)<br />
+而長度就因data值而異。<br />
+跟我們在設定座標是同樣道理。<br />
+假如值是30:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s2">"width"</span><span class="p">,</span> <span class="nx">svg_width</span> <span class="o">/</span> <span class="nx">dataset</span><span class="p">.</span><span class="nx">length</span><span class="p">)</span>
+<span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s2">"height"</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="nx">d</span> <span class="o">*</span> <span class="mi">4</span><span class="p">;</span>
+<span class="p">})</span>
+</code></pre>
+</div>
+<p>會變成:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s2">"width"</span><span class="p">,</span> <span class="mi">500</span> <span class="o">/</span> <span class="mi">9</span><span class="p">)</span>
+<span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s2">"height"</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="mi">30</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="mi">30</span> <span class="o">*</span> <span class="mi">4</span><span class="p">;</span>
+<span class="p">})</span>
+</code></pre>
+</div>
+<p>最終data值30的長方形，加上之前的x和y座標屬性，就會是一個在座標 (0, 80) 寬約55.5px和長120px的長方形。</p>
+
+<p>現在就是見證奇蹟的時刻，寫了這麼久個程式碼 (其實也才不過20幾行) 終於可以按下瀏覽器的重新整理按鈕！</p>
+
+<p><img src="/chapters/ch3/img/first_draft.png" alt="..." style="max-height:300px" class="img-thumbnail" /></p>
+
+<p>看到長方形了嗎？那些就是我們加在html文件上綁著data值的長方形！<br />
+雖然現在看起來還不是很起眼，不過醜小鴨也需要一點時間變天鵝。<br />
+讓我們幫它上一點美麗的色彩！</p>
+
+<p>在 height 屬性之後加入 fill 這個屬性: </p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="c1">//continue...</span>
+<span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s2">"height"</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="nx">d</span> <span class="o">*</span> <span class="mi">4</span><span class="p">;</span>
+<span class="p">})</span>
+<span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s2">"fill"</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="s2">"rgb("</span> <span class="o">+</span>  <span class="nx">d</span><span class="o">*</span><span class="mi">5</span> <span class="o">+</span> <span class="s2">",0 ,0 )"</span><span class="p">;</span>
+<span class="p">});</span>
+</code></pre>
+</div>
+
+<p>燈燈燈燈～ 我們的長方形進化了～ </p>
+
+<p><img src="/chapters/ch3/img/second_draft.png" alt="..." style="max-height:300px" class="img-thumbnail" /></p>
+
+<p>我們先花一點時間說一下 fill 這個屬性。這個屬性其實就是決定元素(rect)顏色的屬性。<br />
+而我們在這邊用的是rgb顏色。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s2">"fill"</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="s2">"rgb("</span> <span class="o">+</span>  <span class="nx">d</span><span class="o">*</span><span class="mi">5</span> <span class="o">+</span> <span class="s2">",0 ,0 )"</span><span class="p">;</span>
+<span class="p">});</span>
+</code></pre>
+</div>
+<p>因為 d 為代數，所以當data值越高的時候顏色會越紅。<br />
+有沒有發現值45的長方形最紅？</p>
+
+<p>我們的紅色長方形都擠在一起視覺上不太舒適。<br />
+我們可以做一些微調，讓他們之間有些空隙。</p>
+
+<p>先在之前的代數 svg_height 之後宣告一個我們間隔要用的值(bar_patting):</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">svg_width</span> <span class="o">=</span> <span class="mi">500</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">svg_height</span> <span class="o">=</span> <span class="mi">200</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">bar_padding</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
+</code></pre>
+</div>
+<p>然後在屬性長方形width的地方改成這樣:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s2">"width"</span><span class="p">,</span> <span class="nx">svg_width</span> <span class="o">/</span> <span class="nx">dataset</span><span class="p">.</span><span class="nx">length</span> <span class="o">-</span> <span class="nx">bar_padding</span><span class="p">)</span>
+</code></pre>
+</div>
+<p>也就是讓我們的長方形中間都間隔兩個 bar-padding 的值。</p>
+
+<p>按下重新整理～</p>
+
+<p><img src="/chapters/ch3/img/padding.png" alt="..." style="max-height:300px" class="img-thumbnail" /></p>
+
+<p>如果你是第一次做D3，到目前為止都理解的話，代表你很有潛力。<br />
+喝杯咖啡上個廁所，我們快要完成了！</p>
+
+<p>現在我們有了許多長方形，但我們卻不知道每個長方形的data值為多少。<br />
+所以接下來我們必須在每個長方形上加上數字，讓我們的圖表更簡單易懂。</p>
+
+<p>用我們增加長方形的相同語法，在 svg.selectAll(“rect”) 那一段code**之後加上:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="c1">//svg.selectAll("rect") </span>
+  <span class="c1">//那一大段code...</span>
+
+<span class="nx">svg</span><span class="p">.</span><span class="nx">selectAll</span><span class="p">(</span><span class="s2">"text"</span><span class="p">)</span>
+   <span class="p">.</span><span class="nx">data</span><span class="p">(</span><span class="nx">dataset</span><span class="p">)</span>
+   <span class="p">.</span><span class="nx">enter</span><span class="p">()</span>
+   <span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="s2">"text"</span><span class="p">)</span>
+</code></pre>
+</div>
+<p>新增的這一段跟我們增加長方形的方法一樣。<br />
+先對 “text” 元素做一個empty selection，因為我們html上沒有還沒有任何 text 元素。<br />
+宣告我們要用的 data 是我們的 dataset array。<br />
+用 <em>.enter()</em> 過濾的已經有 text 元素代表的 data值，但因為所有在 dataset 裡的 data 值都沒有 “text” 這個元素代表 (只有我們綁上的 “rect” 元素)。所以全部 9 個 data 值都不會被過濾掉。<br />
+然後再將過濾過的 data 值都綁上 “text” 元素。<br />
+之後加上:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">.</span><span class="nx">text</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="nx">d</span><span class="p">;</span>
+<span class="p">})</span>
+</code></pre>
+</div>
+<p>這個程式碼會告訴D3我們要顯示什麼文字。因為我們要顯示的是 data 值，所以用 return d。<br />
+d一樣代表著被執行的data值跟上段增加長方形原理相同。<br />
+然後輸入:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s2">"x"</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">,</span> <span class="nx">i</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="nx">i</span> <span class="o">*</span> <span class="p">(</span><span class="nx">svg_width</span> <span class="o">/</span> <span class="nx">dataset</span><span class="p">.</span><span class="nx">length</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="nx">svg_width</span> <span class="o">/</span> <span class="nx">dataset</span><span class="p">.</span><span class="nx">length</span>  <span class="o">-</span> <span class="nx">bar_padding</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
+<span class="p">})</span>
+<span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s2">"y"</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="nx">svg_height</span> <span class="o">-</span> <span class="p">(</span><span class="nx">d</span> <span class="o">*</span> <span class="mi">4</span><span class="p">)</span> <span class="o">+</span> <span class="mi">20</span><span class="p">;</span>
+<span class="p">})</span>
+</code></pre>
+</div>
+<p>這兩段設定 x 跟 y 屬性的code，跟我們設定我們長方形的 x 跟 y 座標相同。<br />
+以上 3 段 code 如果用 data 值 30 執行的話會是:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">.</span><span class="nx">text</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="mi">30</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="mi">30</span><span class="p">;</span>
+<span class="p">})</span>
+<span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s2">"x"</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="mi">0</span> <span class="o">*</span> <span class="p">(</span><span class="mi">500</span> <span class="o">/</span> <span class="mi">9</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="mi">500</span> <span class="o">/</span> <span class="mi">9</span> <span class="o">-</span> <span class="mi">5</span> <span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
+<span class="p">})</span>
+<span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s2">"y"</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="mi">200</span> <span class="o">-</span> <span class="p">(</span><span class="mi">30</span> <span class="o">*</span> <span class="mi">4</span><span class="p">)</span> <span class="o">+</span> <span class="mi">20</span><span class="p">;</span>
+<span class="p">})</span>
+</code></pre>
+</div>
+<p>大家可以試著套用每一個 data 值和條條看 x 跟 y 的 return 值來抓到 D3 對座標的理解。<br />
+按下重新整理。</p>
+
+<p><img src="/chapters/ch3/img/text_without_padding.png" alt="..." style="max-height:300px" class="img-thumbnail" /></p>
+
+<p>看到我們在長方形上的每一個 text 都往右邊歪嗎？<br />
+所以我們要加上:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s2">"text-anchor"</span><span class="p">,</span> <span class="s2">"middle"</span><span class="p">)</span>
+<span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s2">"x"</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">,</span> <span class="nx">i</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="nx">i</span> <span class="o">*</span> <span class="p">(</span><span class="nx">svg_width</span> <span class="o">/</span> <span class="nx">dataset</span><span class="p">.</span><span class="nx">length</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="nx">svg_width</span> <span class="o">/</span> <span class="nx">dataset</span><span class="p">.</span><span class="nx">length</span> <span class="o">-</span> <span class="nx">bar_padding</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
+<span class="p">})</span>
+</code></pre>
+</div>
+<p>加在 x 屬性的上面。<br />
+重新整理。</p>
+
+<p><img src="/chapters/ch3/img/text_middle.png" alt="..." style="max-height:300px" class="img-thumbnail" /></p>
+
+<p>文字調整到中間了！<br />
+最後再加上一點美化的屬性。<br />
+整段的 code 最終為:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="nx">svg</span><span class="p">.</span><span class="nx">selectAll</span><span class="p">(</span><span class="s2">"text"</span><span class="p">)</span>
+     <span class="p">.</span><span class="nx">data</span><span class="p">(</span><span class="nx">dataset</span><span class="p">)</span>
+     <span class="p">.</span><span class="nx">enter</span><span class="p">()</span>
+     <span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="s2">"text"</span><span class="p">)</span>
+     <span class="p">.</span><span class="nx">text</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nx">d</span><span class="p">;</span>
+     <span class="p">})</span>
+     <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s2">"text-anchor"</span><span class="p">,</span> <span class="s2">"middle"</span><span class="p">)</span>
+     <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s2">"x"</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">,</span> <span class="nx">i</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nx">i</span> <span class="o">*</span> <span class="p">(</span><span class="nx">svg_width</span> <span class="o">/</span> <span class="nx">dataset</span><span class="p">.</span><span class="nx">length</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="nx">svg_width</span> <span class="o">/</span> <span class="nx">dataset</span><span class="p">.</span><span class="nx">length</span> <span class="o">-</span> <span class="nx">bar_padding</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
+     <span class="p">})</span>
+     <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s2">"y"</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">d</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nx">svg_height</span> <span class="o">-</span> <span class="p">(</span><span class="nx">d</span> <span class="o">*</span> <span class="mi">4</span><span class="p">)</span> <span class="o">+</span> <span class="mi">20</span><span class="p">;</span>
+     <span class="p">})</span>
+     <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s2">"font-family"</span><span class="p">,</span> <span class="s2">"sans-serif"</span><span class="p">)</span>
+     <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s2">"font-size"</span><span class="p">,</span> <span class="s2">"20px"</span><span class="p">)</span>
+     <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s2">"fill"</span><span class="p">,</span> <span class="s2">"white"</span><span class="p">);</span>
+</code></pre>
+</div>
+<p>稍微解釋一下，”font-family” 這個屬性會宣告我們要什麼樣的字體。<br />
+“font-size” 就是字體大小。<br />
+最後 “fill”，就是字體顏色，跟長方形的顏色屬性一樣。</p>
+
+<p>重新整理～最後一次。</p>
+
+<p><img src="/chapters/ch3/img/product.png" alt="..." style="max-height:300px" class="img-thumbnail" /></p>
+
+<p>我們完成了簡易的長條圖！<br />
+如果有任何不懂的地方，建議把本章多看幾次。因為本章所使用的都是D3基本技巧，如果現在沒弄懂，以後只會越來愈複雜。</p>
+
+<iframe width="420" height="250" src="http://www.youtube.com/embed/W7pOJjy1qwI">
+</iframe>
+
+<p><br /><br />
+<a href="/chapters/ch3/code/index.html" download="index"><span class="btn btn-success">下載長條圖成品</span></a></p>
+
+<hr />
+
+<div>
+  <span style="float: left">
+    <a href="/ch2/">第二章 - 前置作業</a>
+  </span>
+  <span style="float: right">
+    <a href="/ch4/">第四章 - 圓餅圖</a>
+  </span>
+
+</div>
+<p><br /></p>
+<div>
+  <a href="/">回到章節導覽</a>
+</div>
+
+
+  </article>
+
+</div>
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <!-- <h2 class="footer-heading">D3.js 中文實戰教學</h2> -->
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col  footer-col-1">
+        <ul class="contact-list">
+          <li>D3.js 中文實戰教學</li>
+          <li><a href="mailto:kevinjipotw@gmail.com">kevinjipotw@gmail.com</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col  footer-col-2">
+        <ul class="social-media-list">
+          <li>
+            Collaborators:
+          </li>
+          <li>
+            <a href="https://github.com/kevinchipotw">
+              <span class="icon  icon--github">
+                <svg viewBox="0 0 16 16">
+                  <path fill="#828282" d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761 c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32 c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472 c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037 C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65 c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261 c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082 c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129 c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z"/>
+                </svg>
+              </span>
+
+              <span class="username">kevinchipotw</span>
+            </a>
+          </li>
+
+          <li>
+            <a href="https://github.com/CodeInSleep">
+              <span class="icon  icon--github">
+                <svg viewBox="0 0 16 16">
+                  <path fill="#828282" d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761 c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32 c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472 c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037 C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65 c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261 c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082 c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129 c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z"/>
+                </svg>
+              </span>
+
+              <span class="username">CodeInSleep</span>
+            </a>
+          </li>
+
+          
+          <!--  -->
+        </ul>
+      </div>
+
+      <div class="footer-col  footer-col-3">
+        &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+        <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a>
+
+
+        <!-- <p class="text"></p> -->
+      </div>
+    </div>
+
+  </div>
+
+
+</footer>
+
+
+  </body>
+
+</html>
+
+
+
+
+
